@@ -51,16 +51,18 @@ class Login extends MX_Controller{
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('login');
         } else {
-            
+
             if ($result) {
                 $userdata = array(
                     'user' => array(
-                    'id' => $result->id,
-                    'firstname' => $result->firstname,
-                    'email' => $result->email,
+                        'id' => $result->id,
+                        'firstname' => $result->firstname,
+                        'lastname' => $result->lastname,
+                        'email' => $result->email,
 
-                     ));
+                    ));
                 $this->session->set_userdata($userdata);
+                //show($userdata);
                 redirect('admin/user');
                 //$this->load->view('admin/banner');
             } else {
@@ -68,9 +70,28 @@ class Login extends MX_Controller{
                 $this->load->view('login');
             }
 
-         }
+        }
     }
-    
+
+    /*
+      * function name :logout
+      *  To logout session
+      *
+      * @author	Antony
+      * @access	public
+      * @param :
+      * @return : none
+      */
+    function logout(){
+        $this->load->driver('cache'); # add
+        $this->session->sess_destroy(); # Change
+        $this->cache->clean();  # add
+        redirect('login'); # Your default controller name
+        ob_clean(); # add
+    }
+
+
+
 }
 
 

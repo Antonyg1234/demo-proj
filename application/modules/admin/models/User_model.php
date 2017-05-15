@@ -18,7 +18,7 @@ class User_model extends CI_Model
         $this->db->from('user');
         $this->db->join('roles', 'roles.id = user.roles');
         $result = $this->db->get()->result();
-       // echo $this->db->last_query();die;
+        // echo $this->db->last_query();die;
         return $result;
     }
 
@@ -38,5 +38,5 @@ class User_model extends CI_Model
         $this->db->delete('user');
         return true;
     }
-    
+
 }

@@ -37,7 +37,7 @@
         <?php echo form_open('postLogin'); ?>
         <span class="required">
         <?php
-            echo $this->session->flashdata('error');
+        echo $this->session->flashdata('error');
         ?>
         </span>
         <div class="form-group has-feedback">
