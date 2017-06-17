@@ -35,11 +35,13 @@
         <p class="login-box-msg">Sign in to start your session</p>
 
         <?php echo form_open('postLogin'); ?>
-        <span class="required">
-        <?php
-        echo $this->session->flashdata('error');
-        ?>
-        </span>
+        <div style="text-align: center">
+            <span class="required" style="align-text: center">
+            <?php
+            echo $this->session->flashdata('error');
+            ?>
+            </span>
+        </div><br>
         <div class="form-group has-feedback">
             <span class="required">
             <?php echo form_error('email'); ?>
@@ -55,15 +57,9 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox"> Remember Me
-                    </label>
-                </div>
-            </div>
+            
             <!-- /.col -->
-            <div class="col-xs-4">
+            <div class="col-xs-4" style="float:right;">
                 <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div>
             <!-- /.col -->
@@ -71,11 +67,6 @@
         </form>
 
 
-
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
-
-    </div>
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->

@@ -9,88 +9,88 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MX_Controller{
 
-    function __construct()
-    {
+    function __construct(){
+        
+        // Call the Model constructor
         parent::__construct();
         $this->load->model('admin/login_model');
     }
-
-    /*
-  * function name :index
-  *  To display login page
-  *
-  * @author	Antony
-  * @access	public
-  * @param :
-  * @return : none
-  */
-    public function index()
-    {
-        $this->load->view('login');
-    }
-
-    /*
-    * function name :postLogin
-    *  To display success page after login
+    
+   /*
+    * function name :index
+    * To display login page
     *
     * @author	Antony
     * @access	public
     * @param :
     * @return : none
     */
-    public function postLogin()
-    {
-        $email = trim($this->input->post('email'));
-        $str_password = trim($this->input->post('password'));
-        $password = md5($str_password);
-        $result = $this->login_model->processLogin($email, $password);
+    
+    public function index(){
+        $this->load->view('admin/login');
+    }
 
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+    /*
+    * function name :postLogin
+    * To display success page after login
+    *
+    * @author	Antony
+    * @access	public
+    * @param :
+    * @return : none
+    */
+    public function postLogin(){
+           
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('login');
-        } else {
+           $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+           $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
-            if ($result) {
-                $userdata = array(
-                    'user' => array(
+           if ($this->form_validation->run() == FALSE){
+              $this->load->view('login');
+           } else {
+                 $email = trim($this->input->post('email'));
+                 $str_password = trim($this->input->post('password'));
+                 $password = md5($str_password);
+                 $result = $this->login_model->processLogin($email, $password);
+
+                  if ($result){
+                     $userdata = array(
+                        'user' => array(
                         'id' => $result->id,
                         'firstname' => $result->firstname,
                         'lastname' => $result->lastname,
                         'email' => $result->email,
+                     ));
+                      
+                   $this->session->set_userdata($userdata);
+                   redirect('admin/user');
+                      
+                  } else {
+                         $this->session->set_flashdata('error', 'Not a valid user');
+                         $this->load->view('admin/login');
+                  }
 
-                    ));
-                $this->session->set_userdata($userdata);
-                //show($userdata);
-                redirect('admin/user');
-                //$this->load->view('admin/banner');
-            } else {
-                $this->session->set_flashdata('error', 'Not a valid user');
-                $this->load->view('login');
-            }
-
-        }
+           }
     }
 
     /*
-      * function name :logout
-      *  To logout session
-      *
-      * @author	Antony
-      * @access	public
-      * @param :
-      * @return : none
-      */
+     * function name :logout
+     * To logout session
+     *
+     * @author	Antony
+     * @access	public
+     * @param :
+     * @return : none
+     */
+    
     function logout(){
         $this->load->driver('cache'); # add
         $this->session->sess_destroy(); # Change
         $this->cache->clean();  # add
-        redirect('login'); # Your default controller name
+        redirect('admin/login'); # Your default controller name
         ob_clean(); # add
     }
-
-
+    
 
 }
 

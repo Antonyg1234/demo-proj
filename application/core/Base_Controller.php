@@ -25,7 +25,7 @@ class Base_Controller extends MX_Controller {
             'content' => $this->load->view("$controller_name/$view_name", $view_data, TRUE),
             'js' => array_key_exists('js', $view_data) ? $view_data['js'] : array(),
         );
-       
+       // show($layout_data);
         $this->load->view($this->_default_layout, $layout_data);
     }
     
