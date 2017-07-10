@@ -111,6 +111,7 @@ class Product_model extends CI_Model
         $this->db->from('product');
         $this->db->join('product_images', 'product_images.product_id = product.id');
         $this->db->where("name LIKE '%$search%' OR price LIKE '%$search%' ");
+        $this->db->order_by("id", "DESC");
         $this->db->order_by("name $order, price $order");
         $this->db->limit($limit, $start);
         $result = $this->db->get()->result();
@@ -158,7 +159,7 @@ class Product_model extends CI_Model
         $this->db->join('product_categories', 'product_categories.product_id = product.id');
         $this->db->join('category', 'category.id = product_categories.category_id');
         $this->db->where('product.id', $id);
-        $query = $this->db->get()->result_array();;
+        $query = $this->db->get()->result_array();
           //echo $this->db->last_query();die;
         return $query;
     }

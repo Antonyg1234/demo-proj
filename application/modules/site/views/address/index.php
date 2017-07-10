@@ -1,14 +1,16 @@
 <?php
 include(SIDENAV);
 ?>
-
+      <div class="col-sm-6">                 
+          <h2 class="title text-center">Address <strong>Details</strong></h2>                                  
+        </div>
 
  <div class="col-md-6">
 
       <div class="box">
-            <div class="box-title" style="display:inline;font-size: 30px;">Address Details</div>
+            
                 <div class="col-md-3" style="float:right; display:inline;">
-                <button style="float:right;margin-bottom:6px;margin-right:-14px;" type="button" class="box-title btn btn-block btn-warning" onclick="location.href='<?php echo base_url(); ?>site/address/add'">Add Address</button>
+                <button style="float:right;margin-bottom:6px;margin-right:-14px;" type="button" class="box-title btn btn-block btn-warning" onclick="location.href='<?php echo base_url(); ?>address/add'">Add Address</button>
                 </div>
                 <!-- /.box-header -->
 
@@ -36,7 +38,7 @@ include(SIDENAV);
                               <td class="col-md-8"><?php echo $row->address_1.',<br>'.$row->address_2.',<br>'.$row->city.',<br>'.$row->statename.',<br>'.$row->countryname.' - '.$row->zipcode; ?></td>
                               <td col-md-3>
                                  <div class="clearfix">
-                                  <button type="submit" name="edit" class="btn btn-warning cart_inline"  onclick="location.href='<?php echo base_url(); ?>site/address/edit/<?php echo $row->id ?>'">Edit</button>
+                                  <button type="submit" name="edit" class="btn btn-warning cart_inline"  onclick="location.href='<?php echo base_url(); ?>address/edit/<?php echo $row->id ?>'">Edit</button>
                                   <button type="button" onclick="deleteAddress(<?php echo $row->id ?>)" name="delete" class="btn btn-danger cart_inline">Delete</button>
                                  </div>
                                  

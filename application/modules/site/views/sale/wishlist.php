@@ -16,7 +16,7 @@
 						<tr class="cart_menu" id="no_cart">
 						
 							<td class="image">Item</td>
-							<td class="description">Description</td>
+							<td class="description head_align">Description</td>
 							<td class="price">Price</td>
 							<td class="quantity">Cart</td>
 							<td class="total">Remove</td>
@@ -32,18 +32,19 @@
               			
 						<tr id=<?php echo 'row'.$cnt; ?>>
 							<td class="cart_product">
+							<a href="<?php echo base_url(); ?>product_detail/<?php echo $items->id; ?>">
 							<img src="<?php echo base_url().USER_UPLOAD_PRODUCT_URL.$items->image_name; ?>" alt="" style="height: 100px;width: 150px;">
+							</a>
 							</td>
-							<td class="cart_description">
-								<h4><a href=""><?php echo $items->name; ?></a></h4>
-								<p>Web ID: 1089772</p>
+							<td class="cart_description ">
+								<h4><a href="<?php echo base_url(); ?>product_detail/<?php echo $items->id; ?>"><?php echo $items->name; ?></a></h4>
 							</td>
 							<td class="cart_price">
 								<p>$<?php echo $items->price; ?></p>
 							</td>
                             <?php $is_added = is_added_cart($items->id); ?>
                             <td class="cart_price" >
-							      <button type="button" class="add_cart btn btn-warning" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $items->id; ?>" data-price="<?php echo $items->price; ?>" data-name="<?php echo $items->name; ?>" 
+							      <button type="button" class="add_cart btn btn-warning" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $items->id; ?>" data-price="<?php echo $items->price; ?>" data-name="<?php echo $items->name; ?>" data-quantity="<?php echo $items->quantity; ?>"
                                             data-image="<?php echo $items->image_name; ?>"><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?></button>
 							</td>
 							

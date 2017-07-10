@@ -60,6 +60,7 @@ class Category_model extends CI_Model
         $this->db->from('category');
         $this->db->join('parent_category', 'parent_category.id = category.parent_id');
         $this->db->where("name LIKE '%$search%' ");
+        $this->db->order_by("parent_id",'ASC');
         $this->db->order_by("name $order");
         $this->db->limit($limit, $start);
         $result = $this->db->get()->result();
@@ -132,13 +133,14 @@ class Category_model extends CI_Model
     }
     /*
      * function name :update_update
-     *  To update category details at id passed
+     * To update category details at id passed
      *
      * @author	Antony
      * @access	public
-     * @param : array
+     * @param : array/variable
      * @return : none
      */
+    
     public function update_category($data,$id){
         $this->db->where('id', $id);
         $this->db->update('category', $data);

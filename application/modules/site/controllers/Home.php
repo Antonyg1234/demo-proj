@@ -27,14 +27,14 @@ class Home extends Site_Controller{
 
     public function index(){
        //$this->cart->destroy();
-
         
        // show($this->cart->contents());
         $data['slide']=$this->banner();
 
         $data['categories']=$this->category();
         $data['products']=$this->product();
-       // show($data['categories']);
+        $data['mobile_product']=$this->home_model->get_mobile(1);
+        //show($data['products']);
         $this->render('index',$data);
     }
 
@@ -108,12 +108,12 @@ class Home extends Site_Controller{
                                     '<div class="product-image-wrapper">'.
                                         '<div class="single-products">'.
                                             '<div class="productinfo text-center">'.
-                                            '<a href="'.base_url().'site/home/product_detail/'.$value->id.'">'.
+                                            '<a href="'.base_url().'product_detail/'.$value->id.'">'.
                                                 '<img style="height: 180px;" src="'.base_url().USER_UPLOAD_PRODUCT_URL. $value->image_name .'" alt="">'.
                                                     '<h2>$'.$value->price.'</h2>'.
                                                 '<p>'.$value->name.'</p>'.
 
-                                                '<a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart"'.$disable.' data-id="'.$value->id.'" data-price="'.$value->price.'" data-name="'.$value->name.'" data-image="'.$value->image_name.'" ><i class="fa fa-shopping-cart"></i>'.$added.'</a>'.
+                                                '<a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart"'.$disable.' data-id="'.$value->id.'" data-price="'.$value->price.'" data-name="'.$value->name.'" data-quantity="'.$value->quantity.'" data-image="'.$value->image_name.'" ><i class="fa fa-shopping-cart"></i>'.$added.'</a>'.
                                                 '<a>'.
                                             '</div>' .
                                         '</div>'.
@@ -134,24 +134,18 @@ class Home extends Site_Controller{
      * @return : array
      */
 
-    public function sub_category($id ,$name){
-        $data['name']=$name;
-        //show($data['name']);die();
-         $data['slide']=$this->banner();
-         //$data['name']=$name;
+    public function sub_category($id){
+        $data['slide']=$this->banner();
         $data['categories']=$this->category();
-       // $data['products']=$this->product();
-        
+       
         $data['subproduct']= $this->home_model->sub_category($id);
         //show($data['subproduct']);
         if(!empty($data['subproduct'])){
          $this->render('sub_category',$data);   
-     }else{
-       $this->render('empty',$data); 
-     }
+        }else{
+        $this->render('empty',$data); 
+        }
         
-        
-
     }
 
      /*

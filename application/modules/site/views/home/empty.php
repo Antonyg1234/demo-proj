@@ -92,7 +92,7 @@
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
                     <h2 class="title text-center"><?php echo $name;?></h2>
-                     <h1 class="text-center required">Coming Soon!!!!!</h1>
+                     <h1 class="text-center theme">Coming Soon!!!!!</h1>
 
               
                 </div><!--features_items-->

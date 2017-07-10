@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * Category controller contain category related functions
+ * Category controller contains category related functions
  * @package    CI
  * @subpackage Controller
  * @author  Antony
@@ -78,7 +78,7 @@ class Category extends Admin_Controller{
 
     /*
      * function name :edit
-     *  To edit category
+     * To edit category
      *
      * @author	Antony
      * @access	public
@@ -87,7 +87,6 @@ class Category extends Admin_Controller{
      */
 
     public function edit($id = 0){
-        // $data = array();
           $data['id'] =  $id;
           $this->form_validation->set_rules('categoryname', 'Category Name', 'trim|required');
           $this->form_validation->set_rules('categorytype', 'Category Type', 'required');
@@ -125,7 +124,7 @@ class Category extends Admin_Controller{
      */
     
      public function delete(){
-         $id= $this->input->get('id', TRUE);  //getting id from url
+         $id= $this->input->get('id', TRUE);  
          $data=$id;
          $this->category_model->delete_category($data);
          $this->session->set_flashdata('success', 'Configuration deleted successfully');

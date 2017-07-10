@@ -61,8 +61,8 @@ class Home_model extends CI_Model{
      * @return : object
      */
     public function get_products(){
-        $this->db->select('id,name,price,is_featured');
-        $whereCondition =array('is_featured' =>1,'status'=>1);
+        $this->db->select('id,product.name,price,quantity');
+        $whereCondition =array('status'=>1,'is_featured'=>1);
         $this->db->where($whereCondition);
         $query = $this->db->get('product');
         $return = array();
@@ -102,17 +102,20 @@ class Home_model extends CI_Model{
      */
 
     public function get_mobile($id){
-        $this->db->select('product.id,name,price,image_name,');
+        $this->db->select('product.id,product.name,price,image_name,category.parent_id,quantity');
         $this->db->join('product_categories', 'product_categories.product_id = product.id');
+        $this->db->join('category','category.id=product_categories.category_id');
         $this->db->join('product_images', 'product_images.product_id = product.id');
-        $this->db->where('product_categories.category_id',$id);
+        $this->db->where('category.parent_id',$id);
+        $this->db->where('product.status',1);
+        $this->db->group_by('product.name'); 
         $query = $this->db->get('product');
         // echo $this->db->last_query();die;
         return $query->result();
     }
 
     /*
-     * function name :get_products
+     * function name :sub_category
      * To get product details
      * @author  Antony
      * @access  public
@@ -120,11 +123,12 @@ class Home_model extends CI_Model{
      * @return : object
      */
     public function sub_category($id){
-        $this->db->select('product.id,name,price');
+        $this->db->select('product.id,product.name as productname,price,category.name as subcategory_name,category.parent_id as categoryid,quantity');
         $this->db->join('product_categories', 'product_categories.product_id = product.id');
-        $this->db->where('product_categories.category_id', $id);
+        $this->db->join('category','category.id=product_categories.category_id');
+        $whereCondition=array('product_categories.category_id'=>$id,'product.status'=>1);
+        $this->db->where($whereCondition);
         $query = $this->db->get('product');
-       // echo $this->db->last_query();die;
         $return = array();
         
 
@@ -148,7 +152,6 @@ class Home_model extends CI_Model{
         $this->db->select('id,image_name');
         $this->db->where('product_id', $product_id);
         $query = $this->db->get('product_images');
-        // echo $this->db->last_query();die;
         return $query->result();
     }
 
@@ -220,8 +223,8 @@ class Home_model extends CI_Model{
 
     
     /*
-     * function name :insert_wishid
-     *  To update category details at id passed
+     * function name :get_wishcart
+     *  To get wishlist product of user
      *
      * @author  Antony
      * @access  public

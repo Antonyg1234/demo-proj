@@ -7,6 +7,7 @@
         </ol>
       </div>
 
+ 
   <?php if(!($this->cart->contents())){ ?>
     <h3 style="text-align:center;color:#fe980f;">! No items for Checkout !</h3>
   <?php }else{ ?> 
@@ -60,18 +61,17 @@
                   <input type="text" name="zipcode" placeholder="Zip Code *" value="<?php echo $address->zipcode; ?>" class="order-input">
                   <span class="required"> <?php echo form_error('zipcode'); ?></span>
 
-                  <select class="country" name="country" class="order-input">
-                    <option value="<?php echo $address->countryid;?>"><?php echo $address->countryname; ?></option>
+                  <select class="country order-input" name="country">
+                   
                     <?php foreach ($country->result() as $row){?>
-                    <option value="<?php echo $row->id;?>"><?php echo $row->name;?></option>
+                    <option value="<?php echo $row->id;?>" <?php if($row->id==$address->countryid){echo 'selected="selected"'; } ?> ><?php echo $row->name;?></option>
                     <?php } ?>
                   </select>
-                  <span class="required"> <?php echo form_error('country'); ?></span>
+                  <span class="required"> <?php echo form_error('country'); ?></span> 
                  
-                    <select class="state" name="state" id="state" class="order-input">
-                    <option value="<?php echo $address->stateid;?>"><?php echo $address->statename; ?></option>
+                    <select class="state order-input" name="state" id="state">
                     <?php foreach ($state->result() as $row){?>
-                    <option value="<?php echo $row->id;?>"><?php echo $row->name;?></option>
+                    <option value="<?php echo $row->id;?>" <?php if($row->id==$address->stateid){echo 'selected="selected"'; } ?> ><?php echo $row->name;?></option>
                     <?php } ?>
                     </select>
                     <span class="required"> <?php echo form_error('state'); ?></span>
@@ -117,11 +117,12 @@
                     
             <tr id=<?php echo 'row'.$cnt; ?>>
               <td class="cart_product">
+              <a href="<?php echo base_url(); ?>product_detail/<?php echo $items['id']; ?>">
               <img src="<?php echo base_url().USER_UPLOAD_PRODUCT_URL.$items['image_name']; ?>" alt="" style="height: 100px;width: 150px;">
+              </a>
               </td>
               <td class="cart_description">
-                <h4><a href=""><?php echo $items['name']; ?></a></h4>
-                <p>Web ID: 1089772</p>
+                <h4><a href="<?php echo base_url(); ?>product_detail/<?php echo $items['id']; ?>"><?php echo $items['name']; ?></a></h4>
               </td>
               <td class="cart_price">
                 <p>$<?php echo $items['price']; ?></p>

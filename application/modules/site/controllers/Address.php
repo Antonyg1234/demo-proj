@@ -98,7 +98,7 @@ class Address extends Site_Controller{
                 $this->db->set('created_at', 'NOW()', FALSE);
                 $this->address_model->insert_address($data);
                 $this->session->set_flashdata('success', 'Address added successfully');
-                redirect('site/address');
+                redirect('address');
         }
     }
 
@@ -181,7 +181,7 @@ class Address extends Site_Controller{
                     $this->db->set('updated_at', 'NOW()', FALSE);
                     $this->address_model->update_address($data,$id);
                     $this->session->set_flashdata('success', 'Address edited successfully');
-                    redirect('site/address');
+                    redirect('address');
              }
   }
 
@@ -198,7 +198,7 @@ class Address extends Site_Controller{
     public function delete(){
         $id= $this->input->get('id', TRUE);  
         $this->address_model->delete_address($id);
-        redirect('site/address');
+        redirect('address');
     }
 
 

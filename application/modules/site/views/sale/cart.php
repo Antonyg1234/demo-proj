@@ -18,9 +18,9 @@
 				<table class="table table-condensed">
 					
 					<thead>
-						<tr class="cart_menu" >
+						<tr class="cart_menu">
 							<td class="image">Item</td>
-							<td class="description">Description</td>
+							<td class="description head_align">Description</td>
 							<td class="price">Price</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Sub-Total</td>
@@ -36,11 +36,11 @@
               			
 						<tr id=<?php echo 'row'.$cnt; ?>>
 							<td class="cart_product">
+							<a href="<?php echo base_url(); ?>product_detail/<?php echo $items['id']; ?>">
 							<img src="<?php echo base_url().USER_UPLOAD_PRODUCT_URL.$items['image_name']; ?>" alt="" style="height: 100px;width: 150px;">
 							</td>
 							<td class="cart_description">
-								<h4><a href=""><?php echo $items['name']; ?></a></h4>
-								<p>Web ID: 1089772</p>
+								<h4><a href="<?php echo base_url(); ?>product_detail/<?php echo $items['id']; ?>"><?php echo $items['name']; ?></a></h4>
 							</td>
 							<td class="cart_price">
 								<p>$<?php echo $items['price']; ?></p>

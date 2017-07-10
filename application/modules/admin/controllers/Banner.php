@@ -56,49 +56,49 @@ class Banner extends Admin_Controller{
               $this->render('add');
           } else {
             
-                  if (!empty($_FILES)){
-                    
-                      $mimetype = mime_content_type($_FILES['uploadedimage']['tmp_name']);
-                      if(in_array($mimetype, array('image/jpeg', 'image/gif', 'image/png'))) {
+                if (!empty($_FILES)){
+                  
+                    $mimetype = mime_content_type($_FILES['uploadedimage']['tmp_name']);
+                    if(in_array($mimetype, array('image/jpeg', 'image/gif', 'image/png'))){
 
-                      $config['upload_path'] = './'.USER_UPLOAD_URL;
-                      $config['allowed_types'] = 'jpg|png';
-                      $this->load->library('upload', $config);
-                      $this->upload->initialize($config);
+                    $config['upload_path'] = './'.USER_UPLOAD_URL;
+                    $config['allowed_types'] = 'jpg|png';
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
 
-                         if (!$this->upload->do_upload('uploadedimage')){
+                       if (!$this->upload->do_upload('uploadedimage')){
+                            $data['error'] = array('error' => $this->upload->display_errors());
+                            $this->render('add');
+                       } else { 
+                               $uploadData = $this->upload->data();
+                               $picture = $uploadData['file_name'];
+                               $picture_path =  $picture;
 
-                              $data['error'] = array('error' => $this->upload->display_errors());
-                              $this->render('add');
-                         } else { 
-                                 $uploadData = $this->upload->data();
-                                 $picture = $uploadData['file_name'];
-                                 $picture_path =  $picture;
+                               $banner_name = $this->input->post('banner_name');
+                               $status = $this->input->post('status');
 
-                                 $banner_name = $this->input->post('banner_name');
-                                 $status = $this->input->post('status');
+                               $data = array(
+                               'banner_name' => $banner_name,
+                               'banner_path' => $picture,
+                               'status' => $status
+                                );
+            
+                               $this->banner_model->insert_banner($data);
+                               $this->session->set_flashdata('success', 'Banner added successfully');
+                               redirect('admin/banner');
+                       }
 
-                                 $data = array(
-                                 'banner_name' => $banner_name,
-                                 'banner_path' => $picture,
-                                 'status' => $status
-                                  );
-              
-                                 $this->banner_model->insert_banner($data);
-                                 $this->session->set_flashdata('success', 'Banner added successfully');
-                                 redirect('admin/banner');
-                          }
-
-                  }else {
-                      $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
-                        redirect('admin/banner/add');
-                      }}
-                      else {
-                         $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
-                        redirect('admin/banner/add');
+                    } else {
+                        $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
+                          redirect('admin/banner/add');
                     }
 
-            }
+                } else {
+                       $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
+                      redirect('admin/banner/add');
+                }
+
+           }
      }
 
 
@@ -112,9 +112,9 @@ class Banner extends Admin_Controller{
      * @return : none
      */
      public function edit($id = 0){
-            $data['id'] =  $id;
-            $this->form_validation->set_rules('banner_name', 'Banner Name', 'trim|required');
-            $this->form_validation->set_rules('status', 'Status', 'trim|required');
+          $data['id'] =  $id;
+          $this->form_validation->set_rules('banner_name', 'Banner Name', 'trim|required');
+          $this->form_validation->set_rules('status', 'Status', 'trim|required');
 
          if ($this->form_validation->run() == FALSE){
              $data = $this->banner_model->get_banner_update($id);
@@ -122,55 +122,53 @@ class Banner extends Admin_Controller{
              $this->render('edit',$data);
          } else {
                
-             $banner_name = $this->input->post('banner_name');
-             $status = $this->input->post('status');
+                 $banner_name = $this->input->post('banner_name');
+                 $status = $this->input->post('status');
 
-             $data = array(
-                 'banner_name' => $banner_name,
-                 'status' => $status
-             );
+                 $data = array(
+                     'banner_name' => $banner_name,
+                     'status' => $status
+                 );
 
-             if (!empty($_FILES['uploadedimage']['name'])) {
-                     $mimetype = mime_content_type($_FILES['uploadedimage']['tmp_name']);
-                     if(in_array($mimetype, array('image/jpeg', 'image/gif', 'image/png'))) {
+                 if (!empty($_FILES['uploadedimage']['name'])){
+                        $mimetype = mime_content_type($_FILES['uploadedimage']['tmp_name']);
+                        if(in_array($mimetype, array('image/jpeg', 'image/gif', 'image/png'))){
 
+                             $config['upload_path'] = './'.USER_UPLOAD_URL;
+                             $config['allowed_types'] = 'jpg|png';
+                             $this->load->library('upload', $config);
+                             $this->upload->initialize($config);
 
-                 $config['upload_path'] = './'.USER_UPLOAD_URL;
-                 $config['allowed_types'] = 'jpg|png';
-                 $this->load->library('upload', $config);
-                 $this->upload->initialize($config);
+                             if (!$this->upload->do_upload('uploadedimage')){
+                                 $data['error'] = array('error' => $this->upload->display_errors());
+                                 $data['image_error'] = "Banner image required";
+                                 $this->render('edit', $data);
+                             }
 
-                 if (!$this->upload->do_upload('uploadedimage')) {
-                     $data['error'] = array('error' => $this->upload->display_errors());
-                     $data['image_error'] = "Banner image required";
-                     $this->render('edit', $data);
-                 }
+                             $uploadData = $this->upload->data();
+                             $picture = $uploadData['file_name'];
+                            
+                             $data['banner_path'] = $picture;
+                         } else {
+                               $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
+                               redirect('admin/banner/edit/'.$id);
+                         }
+                  } 
 
-                 $uploadData = $this->upload->data();
-                 $picture = $uploadData['file_name'];
-                
-                 $data['banner_path'] = $picture;
-             }else {
-                 // echo 'Upload a real image!';
-                   $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
-                   redirect('admin/banner/edit/'.$id);
-             }} 
-
-             $this->banner_model->update_banner($data,$id);
-             //echo "im here";die();
-             $this->session->set_flashdata('success', 'Banner updated successfully');
-             redirect('admin/banner');
-
-             }
+                 $this->banner_model->update_banner($data,$id);
+                 //echo "im here";die();
+                 $this->session->set_flashdata('success', 'Banner updated successfully');
+                 redirect('admin/banner');
 
          }
 
+     }
 
-    
+
     
     /*
      * function name :delete
-     * To delete category
+     * To delete banner
      *
      * @author	Antony
      * @access	public
@@ -179,7 +177,7 @@ class Banner extends Admin_Controller{
      */
 
      public function delete(){
-        $id= $this->input->get('id', TRUE);  //getting id from url
+        $id= $this->input->get('id', TRUE);  
         $data=$id;
         $this->banner_model->delete_banner($data);
         $this->session->set_flashdata('success', 'Banner deleted successfully');

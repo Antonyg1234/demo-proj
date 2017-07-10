@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>public/assets/css/_all-skins.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>public/assets/css/stylesheet.css">
     <!--  <link rel="stylesheet" href="<?php echo base_url(); ?>public/assets/plugins/datatables/dataTables.bootstrap.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>public/assets/plugins/datatables/jquery.dataTables.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -114,13 +115,13 @@
 
                 <li class="treeview">
                     <a href="<?php echo base_url(); ?>admin/category">
-                        <i class="fa fa-dashboard"></i> <span>Category</span>
+                        <i class="fa fa-tags"></i> <span>Category</span>
                     </a>
                 </li>
 
                 <li class="treeview">
                     <a href="<?php echo base_url(); ?>admin/product">
-                        <i class="fa fa-dashboard"></i> <span>Product</span>
+                        <i class="fa fa-shopping-cart"></i> <span>Product</span>
                     </a>
                 </li>
 
@@ -128,6 +129,44 @@
                     <a href="<?php echo base_url(); ?>admin/coupon">
                         <i class="fa fa-contao"></i> <span>Coupon</span>
                     </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="<?php echo base_url(); ?>admin/contact">
+                        <i class="fa fa-phone"></i> <span>Contact US</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="<?php echo base_url(); ?>admin/order">
+                        <i class="fa fa-amazon"></i> <span>Order Details</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="<?php echo base_url(); ?>admin/system">
+                        <i class="fa fa-google-plus-square"></i> <span>System</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="<?php echo base_url(); ?>admin/cms">
+                        <i class="fa fa-expeditedssl"></i> <span>CMS</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                   <a href="javascript:void(0)">
+                       <i class="fa fa-bar-chart"></i> <span>Reports</span>
+                   <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                   </a>
+                   <ul class="treeview-menu" style="display: none;">
+                        <li><a href="<?php echo base_url(); ?>admin/reports/sales_chart"><i class="fa fa-circle-o"></i> Sales Report</a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/reports/user_chart"><i class="fa fa-circle-o"></i> Customer Registered</a></li>
+                        <li><a href="<?php echo base_url(); ?>admin/reports/coupons_chart"><i class="fa fa-circle-o"></i> Coupons Used</a></li>
+                   </ul>
                 </li>
 
             </ul>
@@ -345,6 +384,7 @@
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
+    <div id="modal-placeholder"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -367,15 +407,22 @@
 <script src="<?php echo base_url(); ?>public/assets/js/jquery.validate.js"></script>
 <script src="<?php echo base_url(); ?>public/assets/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url(); ?>public/assets/plugins/datatables/dataTables.scroller.js"></script>
+
+
+
 <?php
 if(!empty($js)){
 ?>
     <script src="<?php echo base_url(); ?>public/assets/js/<?php echo $js;?>"></script>
 <?php } ?>
+
 <script src="<?php echo base_url(); ?>public/assets/js/admin/image.js"></script>
 <script src="<?php echo base_url(); ?>public/assets/js/admin/function.js"></script>
 <script src="<?php echo base_url(); ?>public/assets/js/admin/validation.js"></script>
-
+<script>
+var base_url= '<?php echo base_url(); ?>';
+var chart_url = base_url+'admin/reports/chart';
+</script>
 <script>
   $(function () {
     //Initialize Select2 Elements

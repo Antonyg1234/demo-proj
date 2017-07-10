@@ -11,32 +11,43 @@ class Banner_model extends CI_Model{
     function __construct(){
         parent::__construct();
     }
-
+    
     /*
-     * function name :record_count
-     *  To get no. of rows in user
+     * function name :insert_banner
+     *  To insert banners details in table
      *
-     * @author	Antony
-     * @access	public
-     * @param :
-     * @return : number
+     * @author  Antony
+     * @access  public
+     * @param : array
+     * @return : none
      */
+    
      public function insert_banner($data){
          $this->db->insert('banners', $data);
      }
+
+    /*
+     * function name :record_count
+     * To get no. of rows in banner table
+     *
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : variable
+     */
 
       public function record_count(){
           return $this->db->count_all("banners");
       }
 
     /*
-     * function name :get_user
-     *  To get user details from user table
+     * function name :get_banner
+     *  To get banner details from banner table
      *
      * @author	Antony
      * @access	public
      * @param :
-     * @return : number
+     * @return : array
      */
 
     public function get_banner(){
@@ -51,6 +62,7 @@ class Banner_model extends CI_Model{
         $this->db->select('id,banner_name,banner_path,status');
         $this->db->from('banners');
         $this->db->where("banner_name LIKE '%$search%' ");
+        $this->db->order_by("id", "DESC");
         $this->db->order_by("banner_name $order");
         $this->db->limit($limit, $start);
         $result = $this->db->get()->result();
@@ -99,7 +111,7 @@ class Banner_model extends CI_Model{
      *
      * @author   Antony
      * @access   public
-     * @param : number
+     * @param : variable
      * @return : array
      */
     
@@ -108,7 +120,6 @@ class Banner_model extends CI_Model{
         $this->db->from('banners');
         $this->db->where('id', $id);
         $query = $this->db->get()->row();
-        //  echo $this->db->last_query();die;
         return $query;
     }
     /*
@@ -117,7 +128,7 @@ class Banner_model extends CI_Model{
      *
      * @author   Antony
      * @access   public
-     * @param : number
+     * @param : array/variable
      * @return : array
      */
 

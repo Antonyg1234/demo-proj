@@ -76,7 +76,7 @@ class Account extends Site_Controller{
                    
                     $this->account_model->update_account($data,$id);
                     $this->session->set_flashdata('success', 'Profile updated successfully');
-                    redirect('site/account');
+                    redirect('account');
              }
  
   }

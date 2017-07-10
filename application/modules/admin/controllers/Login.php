@@ -52,8 +52,8 @@ class Login extends MX_Controller{
                  $str_password = trim($this->input->post('password'));
                  $password = md5($str_password);
                  $result = $this->login_model->processLogin($email, $password);
-
-                  if ($result){
+                
+                  if($result){
                      $userdata = array(
                         'user' => array(
                         'id' => $result->id,
@@ -84,11 +84,11 @@ class Login extends MX_Controller{
      */
     
     function logout(){
-        $this->load->driver('cache'); # add
-        $this->session->sess_destroy(); # Change
-        $this->cache->clean();  # add
-        redirect('admin/login'); # Your default controller name
-        ob_clean(); # add
+        $this->load->driver('cache');
+        $this->session->sess_destroy(); 
+        $this->cache->clean(); 
+        redirect('admin/login'); 
+        ob_clean(); 
     }
     
 

@@ -12,7 +12,8 @@ class Checkout extends Site_Controller{
         // Call the Model constructor
         parent::__construct();
         $this->load->library('paypal_lib');
-        $this->load->model('site/checkout_model');  
+        $this->load->model('site/checkout_model'); 
+        $this->load->model('site/email_model'); 
     }
 
     /*
@@ -157,11 +158,11 @@ class Checkout extends Site_Controller{
         if(!$dis_amount){
         $dis_amount=0;
         }
-        //echo $shipping;die();
+        //echo $dis_amount;die();
         //Set variables for paypal form
         $returnURL = base_url().'site/checkout/success'; //payment success url
         $cancelURL = base_url().'site/sale/cart'; //payment cancel url
-        $notifyURL = base_url().'paypal/ipn'; //ipn url
+        //$notifyURL = base_url().'site/checkout/ipn'; //ipn url
         //get particular product data
        // $product = $this->product->getRows($id);
         $userID = 1; //current user id
@@ -186,15 +187,23 @@ class Checkout extends Site_Controller{
         $this->paypal_lib->add_field('discount_amount_cart', $dis_amount);
         $this->paypal_lib->add_field('shipping_1', $shipping); 
         $this->paypal_lib->add_field('custom', $orderid);
-        //$this->paypal_lib->add_field('custom1', $discount_per);  
-        $this->paypal_lib->add_field('rm',$i);
+        $this->paypal_lib->add_field('custom_1', $dis_amount);  
+        $this->paypal_lib->add_field('rm',2);
         // show($this->paypal_lib);     
         $this->paypal_lib->image($logo);
         
         $this->paypal_lib->paypal_auto_form();
     }
 
-   
+    /*
+     * function name :success_cod
+     * To display page on COD
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variables
+     * @return : none
+     */   
 
     function success_cod($discount_per,$order_id){
         if(!$discount_per){
@@ -207,19 +216,84 @@ class Checkout extends Site_Controller{
         
         $data['user']=$this->checkout_model->get_user($user_id);
         $data['address']=$this->checkout_model->get_bill_address($order_id);
-        //var_dump($data['address']);
+ 
+
+        foreach($data['cart'] as $items){
+          $product_details.= '<table cellpadding="6" cellspacing="0" style="width:554px">'.
+                  '<thead>'.
+                     '<tr class="cart_menu">'.
+                     '<td class="image">Item</td>'.
+                     '<td class="description">Description</td>'.
+                     '<td class="price">Price</td>'.
+                     '<td class="quantity">Quantity</td>'.
+                     '<td class="total">Sub-Total</td>'.
+                     '</tr>'.
+                  '</thead>'.
+                  '<tbody>'.
+                 '<tr>'.
+                    '<td class="cart_product">'.
+                    '<img src="'. base_url().USER_UPLOAD_PRODUCT_URL.$items['image_name'].'" alt="" style="height: 100px;width: 150px;">'.
+                    '</td>'.
+                    '<td class="cart_description">'.
+                    '<h4><a href="">'. $items['name'] .'</a></h4>'.
+                    '<p>Web ID: 1089772</p>'.
+                    '</td>'.
+                    '<td class="cart_price">'.
+                    '<p>$'. $items['price'] .'</p>'.
+                    '</td>'.
+                    '<td class="cart_quantity">'.
+                    '<p>'. $items['qty'] .'</p>'.
+                    '</td>'.
+                    '<td class="cart_total">'.
+                    '<p class="cart_total_price" >$'. $items['subtotal'] .'</p>'.
+                    '</td>'.
+                 '</tr>'.
+                '</tbody>'.
+         '</table>';
+        }
+
+        $gtotal=$data['address']->grand_total;
+        $billing_address='<span>'.
+                         $data['address']->billing_address_1.',<br>'.$data['address']->billing_address_2.',<br>'.$data['address']->billing_city.',<br>'.$data['address']->statename.',<br>'.$data['address']->countryname.' - '.$data['address']->billing_zipcode.
+                    '</span><br/>';
+
+        $data1=array($product_details,$gtotal,$billing_address,$billing_address,$billing_address,'COD');
+        $arr1=array('{product_details}','gtotal','U_add','B_add','S_add','paymnt_met');
+
+        $admin_login=$this->email_model->template('order details');
+        $subject=$admin_login->subject;
+        $content=$admin_login->content;
+        $var_content=str_replace($arr1,$data1,$content);
+        //echo $var_content1;die();
+
+         $order_email=array(
+             'email'=>$data['user']->email,
+             'subject'=>$subject,
+             'content'=>$var_content,
+              );
+         
+         $this->email_model->email($order_email);
+
+         $admin_order_email=array(
+             'email'=>ADMIN,
+             'subject'=>$subject,
+             'content'=>$var_content,
+              );
+
+        $this->email_model->email($admin_order_email);
+
         $data['success']=array(
           'amount'=> $grandtotal,
           'orderid'=> $order_id,
         );
         $data['per']=$discount_per;
         $data['pay']=1;
-        $this->render('check', $data);
+        $this->render('success', $data);
     }
     
     /*
      * function name :success
-     * To lead to success page on payment
+     * To lead to success page on payment through paypal
      *
      * @author  Antony
      * @access  public
@@ -229,9 +303,8 @@ class Checkout extends Site_Controller{
       function success(){
 
         //get the transaction data
-        //$paypalInfo = $this->input->post();
         $paypalInfo = $this->input->post();
-        show($paypalInfo);
+        //show($paypalInfo);
           
        // $data['item_number'] = $paypalInfo['item_number1']; 
         $data['txn_id'] = $paypalInfo["txn_id"];
@@ -242,14 +315,88 @@ class Checkout extends Site_Controller{
         $order_id=$data['custom'];
         $user_id=$this->session->userdata['site_user']['id'];
         $data['cart']=$this->cart->contents();
-        //$this->cart->destroy();
+        $this->cart->destroy();
         
         $data['user']=$this->checkout_model->get_user($user_id);
         $data['address']=$this->checkout_model->get_bill_address($order_id);
         $data['pay']=2;
-        show($data);
-        $this->render('check', $data);
+        $data['success']=array(
+          'orderid'=> $order_id,
+        );
+        $data1=array(
+                'transaction_id' => $data['txn_id'],
+                'order_status' => 'PO',
+               );
+        
+        foreach($data['cart'] as $items){
+          $product_details.= '<table cellpadding="6" cellspacing="0" style="width:554px">'.
+                  '<thead>'.
+                     '<tr class="cart_menu">'.
+                     '<td class="image">Item</td>'.
+                     '<td class="description">Description</td>'.
+                     '<td class="price">Price</td>'.
+                     '<td class="quantity">Quantity</td>'.
+                     '<td class="total">Sub-Total</td>'.
+                     '</tr>'.
+                  '</thead>'.
+                  '<tbody>'.
+                 '<tr>'.
+                    '<td class="cart_product">'.
+                    '<img src="'. base_url().USER_UPLOAD_PRODUCT_URL.$items['image_name'].'" alt="" style="height: 100px;width: 150px;">'.
+                    '</td>'.
+                    '<td class="cart_description">'.
+                    '<h4><a href="">'. $items['name'] .'</a></h4>'.
+                    '<p>Web ID: 1089772</p>'.
+                    '</td>'.
+                    '<td class="cart_price">'.
+                    '<p>$'. $items['price'] .'</p>'.
+                    '</td>'.
+                    '<td class="cart_quantity">'.
+                    '<p>'. $items['qty'] .'</p>'.
+                    '</td>'.
+                    '<td class="cart_total">'.
+                    '<p class="cart_total_price" >$'. $items['subtotal'] .'</p>'.
+                    '</td>'.
+                 '</tr>'.
+                '</tbody>'.
+         '</table>';
+        }
+
+        $gtotal=$data['address']->grand_total;
+        $billing_address='<span>'.
+                         $data['address']->billing_address_1.',<br>'.$data['address']->billing_address_2.',<br>'.$data['address']->billing_city.',<br>'.$data['address']->statename.',<br>'.$data['address']->countryname.' - '.$data['address']->billing_zipcode.
+                    '</span><br/>';
+
+        $dataa=array($product_details,$gtotal,$billing_address,$billing_address,$billing_address,'PAYPAL');
+        $arr1=array('{product_details}','gtotal','U_add','B_add','S_add','paymnt_met');
+
+        $admin_login=$this->email_model->template('order details');
+        $subject=$admin_login->subject;
+        $content=$admin_login->content;
+        $var_content=str_replace($arr1,$dataa,$content);
+        //echo $var_content1;die();
+
+         $order_email=array(
+             'email'=>$data['user']->email,
+             'subject'=>$subject,
+             'content'=>$var_content,
+              );
+         
+         $this->email_model->email($order_email);
+
+         $admin_order_email=array(
+             'email'=>ADMIN,
+             'subject'=>$subject,
+             'content'=>$var_content,
+              );
+
+        $this->email_model->email($admin_order_email);
+
+        $this->checkout_model->update_user_order($data1,$order_id);
+        $this->render('success', $data);
      }
+
+     
      
       /*
      * function name :cancel
@@ -374,4 +521,112 @@ class Checkout extends Site_Controller{
          echo true;
 
      }
+
+     /*
+     * function name :order
+     * To display order details 
+     *
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : none
+     */
+
+    public function order(){
+      $user_id=$this->session->userdata['site_user']['id'];
+      $data['order']=$this->checkout_model->get_order($user_id);
+      //var_dump($data);die();
+      $this->render('order',$data);
+    }
+
+    /*
+     * function name :order_view
+     * To view particular order detail
+     *
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : none
+     */
+      function order_view($id=0){
+       // $id=$this->input->get('id');
+        //echo $id;die();
+        $user_id=$this->session->userdata['site_user']['id'];
+        $data['order']=$this->checkout_model->get_order_detail($id);
+        //show($data['order']);
+        $data['address']=$this->checkout_model->get_bill_address($id);
+        $data['user']=$this->checkout_model->get_user($user_id);
+        $coupon_id=$data['order'][0]->coupon_id;
+        $grandtotal=$data['order'][0]->grand_total;
+        //show($data['order']);
+        if($coupon_id>0){
+            $check=$this->checkout_model->check_coupon_order($coupon_id);
+            $percent_off=$check->percent_off;
+        }else{
+            $percent_off=0;
+        }
+             //echo $percent_off;die();
+
+        $data['success']=array(
+          'amount'=> $grandtotal,
+          'orderid'=> $id,
+          'status'=> $data['order'][0]->order_status,
+          'percent'=>$percent_off,
+         );
+        //var_dump($data['success']);die();
+        $this->render('order_view',$data);
+        //get the transaction data
+        
+     }
+
+     /*
+     * function name :track
+     * To track particular order detail
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : none
+     */
+      function track($id=0){
+             $this->form_validation->set_rules('email', 'Email Id', 'trim|required');
+             $this->form_validation->set_rules('orderid', 'Order Id', 'trim|required');
+             if($this->form_validation->run() == FALSE){
+                $this->render('track');
+             }else{
+                  $email = $this->input->post('email');
+                  $orderid = $this->input->post('orderid');
+                  $user_id=$this->checkout_model->check_mailid($email);
+                  $userid=$user_id->id;
+                  //show($userid);die();
+                  if(!$user_id){
+                    $this->session->set_flashdata('error_mail', 'Mail id does not exist');
+                    redirect('track');
+                  }else{
+                      $start_id=substr($orderid,0,4);
+                      $ord_id=substr($orderid,4);
+                      $check_no= is_numeric($ord_id); 
+                      $order=$this->checkout_model->check_orderid($ord_id,$userid);
+                      //show($order);
+                      if(($start_id!='ORD-')||(strlen($ord_id)!=3)||$check_no==false||(!$order)){
+
+                        $this->session->set_flashdata('error', 'Not a valid OrderID');
+                        redirect('track');
+                      }else{
+                         $status=is_status($order->order_status);
+                        // echo $status;die();   
+                        $msg='Your order status for OrderId: '.$orderid.' is '.$status;
+                        $data=array(
+                          'email'=>$email,
+                          'orderid'=>$orderid,
+                          'msg'=>$msg,
+                            );
+                        $this->render('track',$data);
+                      }
+                  }
+             }
+      
+    } 
+
+          
 }

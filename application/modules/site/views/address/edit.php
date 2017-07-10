@@ -1,11 +1,13 @@
 <?php
 include(SIDENAV);
-?>
+?>  <div class="col-sm-8">                 
+          <h2 class="title text-center">Edit <strong>Address</strong></h2>                                  
+        </div>
     
       <div class="col-md-8">
         <div class="box">
           <div class="form-horizontal">
-            <?php echo form_open('site/address/edit/'.$id); ?>
+            <?php echo form_open('address/edit/'.$id); ?>
               <div class="box-body">
 
                <div class="form-group">

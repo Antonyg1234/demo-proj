@@ -55,79 +55,82 @@ class Product extends Admin_Controller{
            $this->form_validation->set_rules('price', 'Price', 'trim|required|numeric');
            $this->form_validation->set_rules('special_price', 'Special Price', 'trim|required|numeric');
            $this->form_validation->set_rules('quantity', 'quantity', 'trim|required|numeric');
-           //$this->form_validation->set_rules('category_select', 'category', 'required');
+           $this->form_validation->set_rules('category_select[]', 'category', 'required');
           
            if ($this->form_validation->run() == FALSE){
               $data['dropdown'] = $this->product_model->get_dropdown();
               $this->render('add',$data);
            } else {
 
-                  if (!empty($_FILES)){
+                  if(!empty($_FILES)){
                       $mimetype = mime_content_type($_FILES['uploadedimage']['tmp_name']);
                       if(in_array($mimetype, array('image/jpeg', 'image/gif', 'image/png'))) {
 
-                      $config['upload_path'] = './'.USER_UPLOAD_PRODUCT_URL;
-                      $config['allowed_types'] = 'jpg|png';
-                      $this->load->library('upload', $config);
-                      $this->upload->initialize($config);
+                          $config['upload_path'] = './'.USER_UPLOAD_PRODUCT_URL;
+                          $config['allowed_types'] = 'jpg|png';
+                          $this->load->library('upload', $config);
+                          $this->upload->initialize($config);
 
-                      if (!$this->upload->do_upload('uploadedimage')) {
-                           $data['error'] = array('error' => $this->upload->display_errors());
-                           $this->render('add');
-                      } else {
-                             $uploadData = $this->upload->data();
-                             $picture = $uploadData['file_name'];
-                             // $picture_path = 'uploads/' . $picture;
+                          if (!$this->upload->do_upload('uploadedimage')) {
+                               $data['error'] = array('error' => $this->upload->display_errors());
+                               $this->render('add');
+                          } else {
+                                 $uploadData = $this->upload->data();
+                                 $picture = $uploadData['file_name'];
+                                 // $picture_path = 'uploads/' . $picture;
 
-                             $product_name = $this->input->post('product_name');
-                             $price = $this->input->post('price');
-                             $special_price = $this->input->post('special_price');
-                             $quantity = $this->input->post('quantity');
-                             $category_select = $this->input->post('category_select');
-                             $short_description = $this->input->post('short_description');
-                             $long_description = $this->input->post('long_description');
-                             $status = $this->input->post('status');
-                             $featured = $this->input->post('featured');
+                                 $product_name = $this->input->post('product_name');
+                                 $price = $this->input->post('price');
+                                 $special_price = $this->input->post('special_price');
+                                 $quantity = $this->input->post('quantity');
+                                 $category_select = $this->input->post('category_select');
+                                 $short_description = $this->input->post('short_description');
+                                 $long_description = $this->input->post('long_description');
+                                 $status = $this->input->post('status');
+                                 $featured = $this->input->post('featured');
 
-                             if($featured==1){
-                                 $feature=1;
-                             }else{
-                                 $feature=0;
-                             }
-                   
-                             $data = array(
-                               'name' => $product_name,
-                               'price' => $price,
-                               'special_price' => $special_price,
-                               'quantity' => $quantity,
-                               'short_description' => $short_description,
-                               'long_description' => $long_description,
-                               'status' => $status,
-                               'is_featured' => $feature
-                             );
-                        //  var_dump($data);die();
-                             $table_id = $this->product_model->insert_product($data);
-                             
-                             foreach($category_select as $cat){
-                               $data1[] = array(
-                                   'category_id' => $cat,
-                                   'product_id' => $table_id,
-                               );
-                             }
-                          
-                             $data2 = array(
-                                'image_name' => $picture,
-                                'product_id' => $table_id,
-                             );
-                          
-                            $this->product_model->insert_product_cat($data1,$data2);
-                            $this->session->set_flashdata('success', 'Product added successfully');
-                            redirect('admin/product');
-                      }
+                                 if($featured==1){
+                                     $feature=1;
+                                 }else{
+                                     $feature=0;
+                                 }
+                       
+                                 $data = array(
+                                   'name' => $product_name,
+                                   'price' => $price,
+                                   'special_price' => $special_price,
+                                   'quantity' => $quantity,
+                                   'short_description' => $short_description,
+                                   'long_description' => $long_description,
+                                   'status' => $status,
+                                   'is_featured' => $feature
+                                 );
+                            
+                                 $table_id = $this->product_model->insert_product($data);
+                                 
+                                 foreach($category_select as $cat){
+                                   $data1[] = array(
+                                       'category_id' => $cat,
+                                       'product_id' => $table_id,
+                                   );
+                                 }
+                              
+                                 $data2 = array(
+                                    'image_name' => $picture,
+                                    'product_id' => $table_id,
+                                 );
+                              
+                                $this->product_model->insert_product_cat($data1,$data2);
+                                $this->session->set_flashdata('success', 'Product added successfully');
+                                redirect('admin/product');
+                          }
+                  
                   }else {
                         $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
                         redirect('admin/product/add');
-                  } } else {
+                  } 
+                  
+                  } else {
                          $this->session->set_flashdata('error', 'Not a valid file, Only jpg and png allowed');
                         redirect('admin/product/add');
                   }
@@ -150,7 +153,7 @@ class Product extends Admin_Controller{
           $this->form_validation->set_rules('price', 'Price', 'trim|required|numeric');
           $this->form_validation->set_rules('special_price', 'Special Price', 'trim|required|numeric');
           $this->form_validation->set_rules('quantity', 'quantity', 'trim|required|numeric');
-          //$this->form_validation->set_rules('category_select', 'category', 'required');
+          //$this->form_validation->set_rules('category_select[]', 'category', 'required');
         
           if ($this->form_validation->run() == FALSE) {
               $data['data'] = $this->product_model->get_product_update($id);
@@ -185,7 +188,7 @@ class Product extends Admin_Controller{
                   'status' => $status,
                   'is_featured' => $feature
               );
-     // var_dump($data);die();
+     
               if(!empty($category_select)){
               foreach($category_select as $cat){
                   $data1[] = array(
@@ -243,7 +246,7 @@ class Product extends Admin_Controller{
     */
 
     public function delete(){
-        $id= $this->input->get('id', TRUE);  //getting id from url
+        $id= $this->input->get('id', TRUE); 
         $data=$id;
         $this->product_model->delete_product($data);
         $this->product_model->delete_product_cat($data);

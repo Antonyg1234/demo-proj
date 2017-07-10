@@ -23,11 +23,13 @@ class Login_model extends CI_Model{
     
     function processLogin($email=NULL,$password){
         $this->db->select("id,firstname,lastname,email,password,roles");
-        $whereCondition = $array = array('email' =>$email,'password'=>$password,'roles ='=>1);
+        $whereCondition = array('email' =>$email,'password'=>$password,'roles ='=>1);
         $this->db->where($whereCondition);
         $this->db->from('user');
         $result = $this->db->get()->row();
-        // echo $this->db->last_query();die;
         return $result;
     }
+   
+   
+
 }

@@ -17,8 +17,7 @@
 										<div class="product-information"><!--/product-information-->
 											
 											<h2><?php echo $detail->name;?></h2>
-											<p>Web ID: 1089772</p>
-											<img src="<?php echo base_url(); ?>public/assets/images/product-details/rating.png" alt="" /><br>
+											
 											<?php 
 											$is_added = is_added_cart($detail->id); 
                                             $is_wishlist = is_added_wishlist($detail->id); 
@@ -35,7 +34,7 @@
 									        </span>
 									        
 									        <a href="javascript:void(0);" class="add_wishlist_product <?php if($is_wishlist){ echo "added_wishlist";} ?>" data-id="<?php echo $detail->id; ?>" data-row="<?php echo $cnt; ?>" <?php if($is_wishlist){ echo "disabled";} ?>>
-									        <span class="glyphicon glyphicon-heart">
+									        <span class="glyphicon glyphicon-heart glyphicon_align">
 									        
 									        </span>
 									        </a>
@@ -45,11 +44,16 @@
 											<br>
 											<p><b>Availability:</b>
 											
-											<?php if($detail->quantity==0){
+											
+										  <span class='<?php if($detail->quantity==0){echo "required";}else{echo "valid";}?>'>
+
+										  <?php if($detail->quantity==0){
 												echo "Out of Stock";
-											}else{echo "In Stock"; 
+											   }else{echo "In Stock"; 
 										  }?>
-										  <span class='<?php if($detail->quantity==0){echo "required";}else{echo "valid";}?>'></p>
+										  
+										  </span>
+										  </p>
 											<p><b>Detail:</b><?php echo $detail->short_description;?></p>
 											<p><b>Feature:</b><?php echo $detail->long_description;?></p>
 											

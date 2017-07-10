@@ -5,6 +5,11 @@
     top:5px;
     color:red;
 }
+
+.theme{
+    color: #FE980F;
+}
+
 .adduser{float:right;}
 .valid{color:green;}
 .capitalize {
@@ -50,6 +55,51 @@ a.added_wishlist{
     width: 100%;
     font-weight: 300;
 }
+.order_msg{
+    font-size: 20px;
+}
+.track_head{
+   margin-left: 126px;
+   margin-top: 0px;
+}
+.active{
+   color: #fdb45e;
+}
+
+.reply_button{
+   background-color: #ff9900;
+}
+
+.track_center{
+   margin-left: 265px;
+}
+
+.chart{
+    margin-left: 10px;
+    margin-right: 14px;
+}
+
+.head_align{
+    text-align: center;
+}
+.glyphicon_align{
+    margin-left: -147px;
+}
+.img_width{
+    width: 50%;
+    margin-left: -11px;
+    margin-top: 10px;
+}
+
+.google_width{
+    margin-left: -5px;
+    width: 47%;
+    margin-top: 10px;
+}
+
+
+
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #3c8dbc;
     border-color: #367fa9;

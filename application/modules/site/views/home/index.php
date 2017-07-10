@@ -77,7 +77,7 @@
                                         <?php
                                         if(!empty($category->subs)) {
                                             foreach ($category->subs as $sub){
-                                            echo '<li><a href="'.base_url().'site/home/sub_category/'. $sub->id .'/'. $sub->name .'">' . $sub->name . '</a></li>';
+                                            echo '<li><a href="'.base_url().'category_product/'. $sub->id .'">' . $sub->name . '</a></li>';
                                         }
                                         } ?>
                                     </ul>
@@ -117,7 +117,7 @@
 
                                 </div>
                                 <div class="product-overlay" >
-                                <a href="<?php echo base_url(); ?>site/home/product_detail/<?php echo $category->id; ?>">
+                                <a href="<?php echo base_url(); ?>product_detail/<?php echo $category->id; ?>">
                                     <div class="overlay-content">
                                         <!--  <p>View detail</p> -->
                                         <h2>$<?php echo $category->price; ?></h2>
@@ -129,7 +129,7 @@
                                         ?>
 
                                         <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" 
-                                            data-image="<?php echo $sub->image_name; ?>" >
+                                            data-image="<?php echo $sub->image_name; ?>" data-quantity="<?php echo $category->quantity; ?>">
 
                                     <i class="fa fa-shopping-cart" <?php if($is_added){ echo "disabled";} ?> ></i><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
                                         
@@ -157,14 +157,17 @@
 
                 <div class="category-tab"><!--category-tab-->
                     <div class="col-sm-12">
-                        <ul class="nav nav-tabs" id="category_nav">
-                            <?php
+                        <ul class="nav nav-tabs category_nav" >
+                            <?php 
                             foreach ($categories as $category)
-                            { ?>
+                            { if($category->parent_name=="Mobile"){
+                                $p="active";
+                            }else{$p="";}
+                            ?>
                                 
-                           <li class="category" data-id="<?php echo $category->id; ?>"><a><?php echo $category->parent_name; ?></a></li>
+                           <li class="category <?php echo $p?>"  data-id="<?php echo $category->id; ?>"><a><?php echo $category->parent_name; ?></a></li>
                                
-                            <?php
+                            <?php 
                             }
                             ?>
                         </ul>
@@ -172,29 +175,25 @@
 
 
                     <div class="tab-content">
-                        <div class="tab-pane fade active in" id="ajaxCategory" >
+                        <div class="tab-pane fade active in" id="ajaxCategory">
                             <?php 
-                            foreach ($products as $category)
+                            foreach ($mobile_product as $category)
                             {
                             ?>
                             <div class="col-sm-3">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                        <a href="<?php echo base_url(); ?>site/home/product_detail/<?php echo $category->id; ?>">
-                                            <?php
-                                            if(!empty($category->subs)) {
-                                            foreach ($category->subs as $sub){ ?>
-                                            <img style="height: 180px;" src="<?php echo base_url(); ?>/public/assets/images/uploads/product/<?php echo $sub->image_name; ?>" alt="" />
-                                                <?php
-                                            }
-                                            } ?>
+                                        <a href="<?php echo base_url(); ?>product_detail/<?php echo $category->id; ?>">
+                                         
+                                            <img style="height: 180px;" src="<?php echo base_url(); ?>/public/assets/images/uploads/product/<?php echo $category->image_name; ?>" alt="" />
+                                             
                                             <h2>$<?php echo $category->price; ?></h2>
                                             <p><?php echo $category->name; ?></p>
                                             <?php
                                             $is_added = is_added_cart($category->id);
                                             ?>
-                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" data-image="<?php echo $sub->image_name; ?>" ><i class="fa fa-shopping-cart"></i><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
+                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" data-image="<?php echo $category->image_name; ?>" data-quantity="<?php echo $category->quantity; ?>"><i class="fa fa-shopping-cart"></i><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
                                             </a>
                                         </div>
 

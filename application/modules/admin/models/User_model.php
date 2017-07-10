@@ -1,41 +1,29 @@
 <?php
 
 /**
- * Login model contain login related functions
+ * User model contain user related functions
  * @package    CI
  * @subpackage Model
  * @author  Antony
  */
-class User_model extends CI_Model
-{
+class User_model extends CI_Model{
 
-    function __construct()
-    {
+    function __construct(){
         parent::__construct();
     }
     /*
      * function name :record_count
-     *  To get no. of rows in user
+     * To get no. of rows in user table
      *
      * @author	Antony
      * @access	public
      * @param :
-     * @return : number
+     * @return : variable
      */
     
-    public function record_count() {
+    public function record_count(){
         return $this->db->count_all("user");
     }
-
-    /*
-   * function name :get_user
-   *  To get user in user table
-   *
-   * @author	Antony
-   * @access	public
-   * @param :
-   * @return : number
-   */
 
   /*
    * function name :get_dropdown
@@ -44,24 +32,31 @@ class User_model extends CI_Model
    * @author    Antony
    * @access    public
    * @param :
-   * @return : number
+   * @return : array
    */
+
     public function get_dropdown()
     {
         $this->db->select('role_name,id');
         $query = $this->db->get('roles');
-        //  echo $this->db->last_query();die;
         return $query;
 
     }
 
-    public function get_user()
-    {
+  /*
+   * function name :get_user
+   * To get user in user table
+   *
+   * @author  Antony
+   * @access  public
+   * @param :
+   * @return : array
+   */
+
+    public function get_user(){
         $post = $this->input->post();
 
-       $total_display_records = $this->record_count();
-       // echo "<pre>";
-       // print_r($post);
+        $total_display_records = $this->record_count();
         $search= $post['search']['value'];
         $start = $post['start'];
         $limit = $post['length'];
@@ -71,6 +66,7 @@ class User_model extends CI_Model
         $this->db->from('user');
         $this->db->join('roles', 'roles.id = user.roles');
         $this->db->where("firstname LIKE '%$search%' OR email LIKE '%$search%'");
+        $this->db->order_by("created_date", "DESC");
         $this->db->order_by("firstname $order,lastname $order");
         $this->db->limit($limit, $start);
         $result = $this->db->get()->result();
@@ -84,8 +80,6 @@ class User_model extends CI_Model
             $user_array['role']    =   $r->role_name;
             $final_array[]  =   $user_array;
         }
-
-
 
         $finalJsonArray['draw'] = $post['draw'];
         $finalJsonArray['recordsTotal'] = $total_display_records;
@@ -101,7 +95,7 @@ class User_model extends CI_Model
      *
      * @author   Antony
      * @access   public
-     * @param : number
+     * @param : nvariable
      * @return : boolean
      */
     public function delete_user($data){
@@ -120,6 +114,7 @@ class User_model extends CI_Model
        * @param : array
        * @return : none
        */
+
     public function insert_user($data)
     {
         $this->db->insert('user', $data);
@@ -128,12 +123,12 @@ class User_model extends CI_Model
 
     /*
      * function name :get_user_update
-     * To get user details
+     * To get user details for update
      *
      * @author	Antony
      * @access	public
-     * @param : array
-     * @return : none
+     * @param : variable
+     * @return : array
      */
 
     public function get_user_update($id){
@@ -143,7 +138,6 @@ class User_model extends CI_Model
         $this->db->join('roles', 'roles.id = user.roles');
         $this->db->where('user.id', $id);
         $query = $this->db->get()->row();
-        //  echo $this->db->last_query();die;
         return $query;
     }
 
@@ -153,12 +147,11 @@ class User_model extends CI_Model
      *
      * @author	Antony
      * @access	public
-     * @param : array
+     * @param : variable
      * @return : none
      */
     
     public function update_user($data,$id){
-
         $this->db->where('id', $id);
         $this->db->update('user', $data);
 

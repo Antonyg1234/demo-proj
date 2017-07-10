@@ -14,7 +14,9 @@ class Login extends Site_Controller{
         // Call the Model constructor
         parent::__construct();
         $this->load->model('site/login_model');
-    }
+        $this->load->model('site/email_model');
+       // $this->load->library('facebook');
+   }
 
 
     /*
@@ -69,7 +71,39 @@ class Login extends Site_Controller{
                       'password' => $password,
                       'roles' => '5',
                   );
-               
+
+                  $title1='user login';
+                  $data1=array($firstname,$lastname,$email,$pass);
+                 // show($data1);
+                  $arr1=array('{firstname}','{lastname}','{Email}','{Password}');
+                  $user_login=$this->email_model->template($title1);
+                  $subject=$user_login->subject;
+                  $content=$user_login->content;
+                  $var_content=str_replace($arr1,$data1,$content);
+                 
+                  $user_email=array(
+                    'email'=>$email,
+                    'subject'=>$subject,
+                    'content'=>$var_content,
+                    );
+                  $this->email_model->email($user_email);
+
+                  $title2='admin_login';
+                  $data2=array($firstname,$lastname,$email);
+                  $arr2=array('{firstname}','{lastname}','{Email}');
+                  $admin_login=$this->email_model->template($title2);
+                  $subject1=$admin_login->subject;
+                  $content1=$admin_login->content;
+                  $var_content1=str_replace($arr2,$data2,$content1);
+
+                  $admin_email=array(
+                    'email'=>'antony.george@neosofttech.com',
+                    'subject'=>$subject1,
+                    'content'=>$var_content1,
+                    );
+                  $this->email_model->email($admin_email);
+
+
                   $this->db->set('created_date', 'NOW()', FALSE);
                   $this->login_model->create_user($data);
                   $this->session->set_flashdata('login', 'User account created successfully. Login to continue shopping');
@@ -108,7 +142,7 @@ class Login extends Site_Controller{
                         'lastname' => $result->lastname,
                         'email' => $result->email,
                      ));
-                   
+                  
                    $this->session->set_userdata($userdata);
                    $this->session->set_flashdata('success', 'User logged in successfully');
                    redirect('site/home');
@@ -142,7 +176,7 @@ class Login extends Site_Controller{
              $data = array(
                'token' => $key,
                );
-            $this->login_model->update_token($data,$email);
+             $this->login_model->update_token($data,$email);
              $this->sendEmail($key,$email);
              $this->session->set_flashdata('success', 'Recovery mail has been successfully sent to your mail id');
              $this->render('forgot');
@@ -153,7 +187,9 @@ class Login extends Site_Controller{
 
         }
     }
-      /*
+   
+
+   /*
     * function name :sendEmail
     * To send Email
     *
@@ -248,4 +284,6 @@ class Login extends Site_Controller{
         ob_clean(); 
     }
 
+
+    
 }

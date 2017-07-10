@@ -65,7 +65,7 @@
                     <option value="<?php echo $row->id;?>"><?php echo $row->name;?></option>
                     <?php } ?>
                 </select>
-                <span class="required"> <?php echo form_error('category_select'); ?></span>
+                <span class="required"> <?php echo form_error('category_select[]'); ?></span>
                </div>
               </div>
            </div>

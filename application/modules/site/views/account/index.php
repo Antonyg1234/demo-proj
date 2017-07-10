@@ -1,11 +1,14 @@
 <?php
 include(SIDENAV);
 ?>
+      <div class="col-sm-8">                 
+          <h2 class="title text-center">Profile <strong>Details</strong></h2>                                  
+       </div>
       <div class="col-md-8">
          <div class="box">
            <div class="form-horizontal">
 
-              <?php echo form_open('site/account/edit/'.$id); ?>
+              <?php echo form_open('account/edit/'.$account->id); ?>
                  <div class="box-body">
                   <div class="form-group">
                      <label class="col-sm-3 control-label">First Name<span class="required">  *</span></label>

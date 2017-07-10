@@ -96,7 +96,6 @@ class User extends Admin_Controller{
      */
 
     public function edit($id = 0){
-            // $data = array();
             $data['id'] =  $id;
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required|alpha');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required|alpha');
@@ -130,7 +129,7 @@ class User extends Admin_Controller{
 
     /*
      * function name :delete
-     *  To delete category
+     *  To delete user
      *
      * @author	Antony
      * @access	public

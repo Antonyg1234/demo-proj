@@ -212,8 +212,11 @@ class Sale extends Site_Controller{
            'user_id' => $user_id,
            'product_id' => $id,
                     );
+        $this->db->set('created_date', 'NOW()', FALSE);
         $wishlist= $this->home_model->insert_wishid($data);
-        echo true;
+        $data['data_id']=$this->home_model->get_wishcart($user_id);
+        $count=count($data['data_id']);
+        echo $count;
 
       }
 

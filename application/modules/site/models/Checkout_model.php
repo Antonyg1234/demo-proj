@@ -33,8 +33,8 @@ class Checkout_model extends CI_Model{
 
 
          /*
-         * function name :get_address
-         * To get user details
+         * function name :get_bill_address
+         * To get billing address
          *
          * @author  Antony
          * @access  public
@@ -43,7 +43,7 @@ class Checkout_model extends CI_Model{
          */
 
         public function get_bill_address($id){
-        $this->db->select('user_order.id,billing_address_1,billing_address_2,billing_city,states.name as statename,countries.name as countryname,billing_zipcode');
+        $this->db->select('user_order.id,billing_address_1,billing_address_2,billing_city,states.name as statename,countries.name as countryname,billing_zipcode,grand_total');
         $this->db->join('states', 'states.id = user_order.billing_state');
         $this->db->join('countries', 'countries.id = user_order.billing_country');
         $this->db->where('user_order.id',$id);
@@ -70,7 +70,7 @@ class Checkout_model extends CI_Model{
         return $result;
     }
 
-        /*
+    /*
      * function name :get_country
      * To get country list
      *
@@ -106,7 +106,7 @@ class Checkout_model extends CI_Model{
 
     }
 
-      /*
+    /*
      * function name :get_state
      * To get state list
      *
@@ -136,13 +136,11 @@ class Checkout_model extends CI_Model{
      */
 
        public function check_coupon($code){
-        $this->db->select('code,id,coupon,percent_off');
+        $this->db->select('id,coupon,percent_off');
         $this->db->where('code', $code);
         $query = $this->db->get('coupon')->row();
-        //return $query;
-       //return $query->num_rows();
-          if($query){
-            return $query;
+        if($query){
+            return $query; 
          }else{
          	return false;
          }
@@ -180,6 +178,24 @@ class Checkout_model extends CI_Model{
         $id = $this->db->insert_id();
         return $id;
     }
+
+    /*
+     * function name :update_user_order
+     *  To update user transaction id
+     *
+     * @author  Antony
+     * @access  public
+     * @param : array
+     * @return : none
+     */
+    public function update_user_order($data,$order){
+        $this->db->where('id', $order);
+        $this->db->update('user_order', $data);
+        
+    }
+
+
+
 
     /*
      * function name :insert_order_detail
@@ -228,4 +244,102 @@ class Checkout_model extends CI_Model{
        
         return $query->result();
     }
+
+    /*
+     * function name :get_order
+     *  To update category details at id passed
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : none
+     */
+    public function get_order($user_id){
+        
+        $this->db->select('id,order_status,created_date,grand_total,shipping_charges');
+        $this->db->where('user_id', $user_id);
+        $this->db->order_by("created_date",'DESC');
+        $query = $this->db->get('user_order');
+       
+        return $query->result();
+    }
+
+     /*
+     * function name :get_order
+     *  To get order detail of user 
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : none
+     */
+    public function get_order_detail($order_id){
+        
+        $this->db->select('product.id as productid,user_order.id,order_status,shipping_charges,grand_total,coupon_id,name,price,image_name,order_details.quantity,amount');
+        $this->db->join('order_details', 'order_details.order_id = user_order.id');
+        $this->db->join('product', 'product.id = order_details.product_id');
+        $this->db->join('product_images', 'product_images.product_id = product.id');
+        $this->db->where('user_order.id', $order_id);
+        $query = $this->db->get('user_order')->result();
+        //echo $this->db->last_query();die;
+        return $query;
+    }
+
+    /*
+     * function name :check_mailid
+     *  To gcheck mail id  
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : none
+     */
+    public function check_mailid($mail_id){
+        $this->db->select('id');
+        $whereCondition=array('email'=>$mail_id,'roles'=>5);
+        $this->db->where($whereCondition);
+        $query = $this->db->get('user')->row();
+        return $query;
+
+    }
+
+    /*
+     * function name :check_orderid
+     *  To gcheck order id  
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : none
+     */
+    public function check_orderid($order_id,$user_id){
+        $this->db->select('id,order_status');
+         $whereCondition =array('id' =>$order_id,'user_id'=>$user_id);
+        $this->db->where($whereCondition);
+        $query = $this->db->get('user_order')->row();
+       // echo $this->db->last_query();die();
+        return $query;
+
+    }
+
+     /*
+     * function name :get_state
+     * To get state list
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : object
+     */
+
+       public function check_coupon_order($code){
+        $this->db->select('id,percent_off');
+        $this->db->where('id', $code);
+        $query = $this->db->get('coupon')->row();
+        if($query){
+            return $query; 
+         }else{
+            return false;
+         }
+       }
 }

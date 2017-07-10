@@ -23,5 +23,11 @@ function deleteCoupon(id) {
 }
 
 function deleteAddress(id) {
-    if(confirm("Are you sure You want to Delete Address?")) document.location = 'address/delete?id='+id;
+    if(confirm("Are you sure You want to Delete Address?")) document.location = 'site/address/delete?id='+id;
+}
+function deleteSystem(id) {
+    if(confirm("Are you sure You want to Delete Template?")) document.location = 'system/delete?id='+id;
+}
+function deleteCms(id) {
+    if(confirm("Are you sure You want to Delete Cms?")) document.location = 'cms/delete?id='+id;
 }

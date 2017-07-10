@@ -129,5 +129,38 @@ class Login_model extends CI_Model{
         $this->db->update('user', $data);
     }
 
+      /*
+       * function name :facebookLogin
+       * To verify and login through facebook 
+       *
+       * @author  Antony
+       * @access  public
+       * @param : array
+       * @return : variable
+       */
+
+     public function facebookLogin($data){
+        $this->db->select("id");
+        $whereCondition = $array = array('email' =>$data['email'],'roles ='=>5);
+        $this->db->where($whereCondition);
+        $this->db->from('user');
+        $prevQuery = $this->db->get();
+        $prevCheck = $prevQuery->num_rows();
+        if($prevCheck>0){
+          $prevResult = $prevQuery->row_array();
+          $update = $this->db->update('user',$data,array('id'=>$prevResult['id']));
+          $userID = $prevResult['id'];
+        }else{
+          $data['roles']=5;
+          $data['created_date'] = date("Y-m-d ");
+          $insert = $this->db->insert('user',$data);
+          $userID = $this->db->insert_id();
+
+        }
+        // echo $this->db->last_query();die;
+        return $userID;
+    }
+
+   
 
  }

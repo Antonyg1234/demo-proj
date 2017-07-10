@@ -88,4 +88,6 @@ define('USER_UPLOAD_PRODUCT_URL', "public/assets/images/uploads/product/");
 define('SMTP_HOST', 'smtp.wwindia.com');
 define('SMTP_USER', 'rashmi.nalwaya@wwindia.com');
 define('SMTP_PASS', 'RashmI123');
+define('LIST_KEY', '8d376f9f05');
+define('ADMIN', 'antony.george@neosofttech.com');
 define('SIDENAV', 'application/modules/site/views/layouts/sidenav.php');
