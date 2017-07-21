@@ -1,6 +1,7 @@
 <section id="slider"><!--slider-->
     <div class="container">
         <div class="row">
+        <span class="valid" style="font-size:22px; margin-left: 356px;"><?php echo $this->session->flashdata('newsletter'); ?></span>
 
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
@@ -19,7 +20,7 @@
                             $count =$count+1;
                                 ?>
                                 
-                                <div class="item <?php if($count==1){echo active;} ?>">
+                                <div class="item <?php if($count==1){echo "active";} ?>">
                                         <div class="col-sm-6">
                                             <h1><span>E</span>-SHOPPER</h1>
                                             <h2>Free E-Commerce Template</h2>
@@ -128,10 +129,10 @@
                                             $is_wishlist = is_added_wishlist($category->id);
                                         ?>
 
-                                        <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" 
+                                        <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} elseif($category->quantity<=0){echo "out_of_stock disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" 
                                             data-image="<?php echo $sub->image_name; ?>" data-quantity="<?php echo $category->quantity; ?>">
 
-                                    <i class="fa fa-shopping-cart" <?php if($is_added){ echo "disabled";} ?> ></i><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
+                                    <i class="fa fa-shopping-cart"></i><?php if($category->quantity<=0){echo "Out of Stock";}elseif($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
                                         
                                     </div>
                                  </a>
@@ -193,7 +194,7 @@
                                             <?php
                                             $is_added = is_added_cart($category->id);
                                             ?>
-                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($is_added){ echo "disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" data-image="<?php echo $category->image_name; ?>" data-quantity="<?php echo $category->quantity; ?>"><i class="fa fa-shopping-cart"></i><?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
+                                            <a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart <?php if($category->quantity<=0){echo "out_of_stock disabled";} elseif($is_added){ echo "disabled";} ?>" data-id="<?php echo $category->id; ?>" data-price="<?php echo $category->price; ?>" data-name="<?php echo $category->name; ?>" data-image="<?php echo $category->image_name; ?>" data-quantity="<?php echo $category->quantity; ?>"><i class="fa fa-shopping-cart"></i><?php if($category->quantity<=0){echo "Out Of Stock";} elseif($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?> </a>
                                             </a>
                                         </div>
 

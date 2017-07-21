@@ -9,13 +9,22 @@ class Authenticate extends Site_Controller
     }
 
     public function index(){
-        echo "wwwwww";die();
+       // echo "wwwwww";die();
         redirect('login');
     }
 
+     /*
+     * function name :facebookLogin
+     * To login through facebook
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : 
+     */
+
     public function facebookLogin(){
         $userData = array();
-      // echo "WWWWW";die();
+      
         if($this->facebook->is_authenticated()){
             $userProfile = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,gender,locale,picture');
 
@@ -51,9 +60,18 @@ class Authenticate extends Site_Controller
 
     }
 
+    /*
+     * function name :googleLogin
+     * To login/signup through google
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : 
+     */
+
 
     public function googleLogin(){
-        //echo "WWWWW";die();
+       
             // Include the google api php libraries
             include_once APPPATH."libraries/google-api-php-client/Google_Client.php";
             include_once APPPATH."libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
@@ -85,15 +103,12 @@ class Authenticate extends Site_Controller
             if ($gClient->getAccessToken()){
                 $userProfile = $google_oauthV2->userinfo->get();
                 // Preparing data for database insertion
-               // $userData['oauth_provider'] = 'google';
+               
                 $userData['google_token'] = $userProfile['id'];
                 $userData['firstname'] = $userProfile['given_name'];
                 $userData['lastname'] = $userProfile['family_name'];
                 $userData['email'] = $userProfile['email'];
-              //  $userData['gender'] = $userProfile['gender'];
-                //$userData['locale'] = $userProfile['locale'];
-               // $userData['profile_url'] = $userProfile['link'];
-               // $userData['picture_url'] = $userProfile['picture'];
+             
                 // Insert or update user data
                 $userID = $this->login_model->facebookLogin($userData);
 
@@ -119,6 +134,14 @@ class Authenticate extends Site_Controller
             $this->load->view('user_authentication/index',$data);
         }
 
+     /*
+     * function name :twitterLogin
+     * To login/signup through twitter
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : 
+     */
 
     public function twitterLogin(){
         $userData = array();
@@ -176,6 +199,14 @@ class Authenticate extends Site_Controller
     
     }
 
+    /*
+     * function name :twitter_email
+     * To get twitter mail id
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : 
+     */
     public function twitter_email($userData){
         $data['userData']=$userData;
     
@@ -224,22 +255,5 @@ class Authenticate extends Site_Controller
         redirect('/user_authentication');
     }
     
-    // public function googlelogout() {
-    //     $this->session->unset_userdata('token');
-    //     $this->session->unset_userdata('userData');
-    //     $this->session->sess_destroy();
-    //     redirect('/user_authentication');
-    // }
     
-
-    // public function logout() {
-    //     // Remove local Facebook session
-    //     $this->facebook->destroy_session();
-
-    //     // Remove user data from session
-    //     $this->session->unset_userdata('userData');
-
-    //     // Redirect to login page
-    //     redirect('site/home');
-    // }
 }

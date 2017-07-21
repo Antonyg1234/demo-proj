@@ -18,7 +18,7 @@
                             $count =$count+1;
                                 ?>
                                 
-                                <div class="item <?php if($count==1){echo active;} ?>">
+                                <div class="item <?php if($count==1){echo "active";} ?>">
                                         <div class="col-sm-6">
                                             <h1><span>E</span>-SHOPPER</h1>
                                             <h2>Free E-Commerce Template</h2>
@@ -98,7 +98,7 @@
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
-                <?php echo $name_id=$subproduct->id; ?>
+                <!-- <?php echo $name_id=$subproduct->id; ?> -->
                     <h2 class="title text-center"><?php echo $pagename; ?></h2>
 
                     <?php $cnt=1;

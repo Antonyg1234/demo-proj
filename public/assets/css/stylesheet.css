@@ -70,6 +70,10 @@ a.added_wishlist{
    background-color: #ff9900;
 }
 
+.out_of_stock{
+   background-color: indianred;
+}
+
 .track_center{
    margin-left: 265px;
 }

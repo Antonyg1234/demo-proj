@@ -25,16 +25,16 @@
 											<span>
 												<span>US $<?php echo $detail->price;?></span>
 												<label>Quantity:</label>
-												<input id="<?php echo 'qty'.$detail->id; ?>" type="text" value="1" <?php if($is_added){ echo "disabled";} ?>/>
-												<button type="button" class="btn btn-fefault cart multi_cart" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $detail->id; ?>" data-price="<?php echo $detail->price; ?>" data-quantity="<?php echo $detail->quantity; ?>" data-name="<?php echo $detail->name; ?>" data-image="<?php echo $detail->image_name; ?>">
+												<input id="<?php echo 'qty'.$detail->id; ?>" type="text" value="1" <?php if($is_added ||$detail->quantity<=0){ echo "disabled";} ?>/>
+												<button type="button" class="btn btn-fefault cart multi_cart <?php if($detail->quantity<=0){echo "out_of_stock disabled";} ?>" <?php if($is_added){ echo "disabled";} ?> data-id="<?php echo $detail->id; ?>" data-price="<?php echo $detail->price; ?>" data-quantity="<?php echo $detail->quantity; ?>" data-name="<?php echo $detail->name; ?>" data-image="<?php echo $detail->image_name; ?>">
 													<i class="fa fa-shopping-cart"></i>
-													<?php if($is_added){ echo "Added to Cart";}else{echo "Add to Cart";} ?>
+													<?php if($is_added){ echo "Added to Cart";} elseif($detail->quantity<=0){echo "Out Of Stock";}else{echo "Add to Cart";} ?>
 												</button>
 												
 									        </span>
 									        
 									        <a href="javascript:void(0);" class="add_wishlist_product <?php if($is_wishlist){ echo "added_wishlist";} ?>" data-id="<?php echo $detail->id; ?>" data-row="<?php echo $cnt; ?>" <?php if($is_wishlist){ echo "disabled";} ?>>
-									        <span class="glyphicon glyphicon-heart glyphicon_align">
+									        <span class="glyphicon glyphicon-heart ">
 									        
 									        </span>
 									        </a>

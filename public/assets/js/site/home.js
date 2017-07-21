@@ -1,16 +1,6 @@
 $(document).ready(function(){
 
-    $('.add_cart').on('click',function(){
-    $('.disabled').click(function(e){
-        e.preventDefault();
-    });
-    });
-
-    $('.add_wishlist').on('click',function(){
-    $('.disabled').click(function(e){
-        e.preventDefault();
-    });
-    });
+    
 
     $(document).on('click', ".add_wishlist", function (){
        var _this = $(this);
@@ -447,5 +437,17 @@ $(document).ready(function(){
                 })
 
           }); 
+
+    $('.add_cart').on('click',function(){
+    $('.disabled').click(function(e){
+        e.preventDefault();
+    });
+    });
+
+    $('.add_wishlist').on('click',function(){
+    $('.disabled').click(function(e){
+        e.preventDefault();
+    });
+    });
 
 }); 

@@ -63,6 +63,7 @@ class Home_model extends CI_Model{
     public function get_products(){
         $this->db->select('id,product.name,price,quantity');
         $whereCondition =array('status'=>1,'is_featured'=>1);
+        $this->db->order_by("id", "DESC");
         $this->db->where($whereCondition);
         $query = $this->db->get('product');
         $return = array();

@@ -1,5 +1,13 @@
 <?php
-
+/*
+     * function name :show
+     * To display errors
+     *
+     * @author  Antony
+     * @access  public
+     * @param : array
+     * @return : none
+     */
 if(!function_exists('show')){
     function show($array = array()){
         echo "<pre>";
@@ -8,6 +16,15 @@ if(!function_exists('show')){
     }
 }
 
+    /*
+     * function name :token
+     * To genrate a random string for password reset
+     *
+     * @author  Antony
+     * @access  public
+     * @param : none
+     * @return : string
+     */
 if(!function_exists('token')){
     function token($array = array()){
     	$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -21,6 +38,15 @@ if(!function_exists('token')){
     }
 }
 
+ /*
+     * function name :is_added_cart
+     * To check product added present in cart
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : variable
+     */
 if(!function_exists('is_added_cart')){
     function is_added_cart($product_id = 0){
         $_CI = & get_instance();
@@ -34,7 +60,15 @@ if(!function_exists('is_added_cart')){
     }
 }
 
-
+/*
+     * function name :is_added_wishlist
+     * To check product present in wishlist
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : variable
+     */
 
 if(!function_exists('is_added_wishlist')){
     function is_added_wishlist($product_id ){
@@ -54,6 +88,15 @@ if(!function_exists('is_added_wishlist')){
     }
 }
 
+    /*
+     * function name :count_wishlist
+     * To get the count of product in wishlist of logged user
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : variable
+     */
 if(!function_exists('count_wishlist')){
     function count_wishlist($user_id){
         $_CI = & get_instance();
@@ -69,11 +112,31 @@ if(!function_exists('count_wishlist')){
     }
 }
 
+ /*
+     * function name :order_id_display
+     * To pad order id with string
+     *
+     * @author  Antony
+     * @access  public
+     * @param : variable
+     * @return : string
+     */
+
 if(!function_exists('order_id_display')){
     function order_id_display($order_id){
         return $order_id = "ORD-".str_pad($order_id, 3, '0', STR_PAD_LEFT);
     }
 }
+
+ /*
+     * function name :is_status
+     * To check status of and resturn string
+     *
+     * @author  Antony
+     * @access  public
+     * @param : none
+     * @return : string
+     */
 
 if(!function_exists('is_status')){
     function is_status($status=0){
@@ -86,3 +149,28 @@ if(!function_exists('is_status')){
         return $order_status;
     }
 }
+
+ /*
+     * function name :is_status
+     * To check status of and resturn string
+     *
+     * @author  Antony
+     * @access  public
+     * @param : none
+     * @return : string
+     */
+
+// if(!function_exists('is_stock')){
+//     function is_stock($product_id=0){
+//         $_CI = & get_instance();
+//         $count = "";
+//         $_CI->db->select('quantity');
+//         $_CI->db->where('id',$product_id);
+//         $query=$_CI->db->get('product');
+//         if($query->num_rows()>0){
+//            $count = $query->num_rows();
+//         }
+        
+//         return $order_status;
+//     }
+// }

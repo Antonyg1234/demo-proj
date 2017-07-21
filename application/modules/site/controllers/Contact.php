@@ -12,7 +12,7 @@ class Contact extends Site_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('site/contact_model');
-       // $this->load->library('MCAPI');
+        $this->load->library('MailChimp');
         $this->load->model('site/email_model'); 
         }
     /*
@@ -66,16 +66,31 @@ class Contact extends Site_Controller{
             $this->render('index');
         }
     }
-
+    
+    /*
+     * function name :newsletter
+     * To send subscription mail through mailchimp
+     * @author  Antony
+     * @access  public
+     * @param :
+     * @return : 
+     */
     public function newsletter(){
         
         $email = $this->input->post('newsletter');
-        echo $emial;die();
+       
         $list_id= LIST_KEY;
+
+        $result = $this->mailchimp->post("lists/$list_id/members", [ 'email_address' => $email, 'status' => 'subscribed', ]);
         
 
-        if($this->mcapi->listSubscribe($list_id, $email)){
-           //var_dump($response);die();
+        if($result){
+            $this->session->set_flashdata('newsletter', 'You have been subscribed to Newsletter');
+           redirect('site/home');
+
+        }else{
+            $this->session->set_flashdata('newsletter_error', 'Try again');
+           redirect('site/home');
         }
         
      

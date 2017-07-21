@@ -29,56 +29,15 @@ class Home extends Site_Controller{
        //$this->cart->destroy();
         
        // show($this->cart->contents());
-        $data['slide']=$this->banner();
-
-        $data['categories']=$this->category();
-        $data['products']=$this->product();
+        $data['slide']=$this->home_model->get_banner();
+        $data['categories']=$this->home_model->get_categories();
+        $data['products']=$this->home_model->get_products();
         $data['mobile_product']=$this->home_model->get_mobile(1);
         //show($data['products']);
         $this->render('index',$data);
     }
 
-     /*
-     * function name :banner
-     * To display banner details
-     * @author  Antony
-     * @access  public
-     * @param :
-     * @return : array
-     */
-
-    public function banner(){
-        $data = $this->home_model->get_banner();
-        return $data;
-    }
-
-    /*
-     * function name :category
-     * To get category details
-     * @author  Antony
-     * @access  public
-     * @param :
-     * @return : array
-     */
-
-    public function category(){
-        $data= $this->home_model->get_categories();
-        return $data;
-    }
-
-    /*
-     * function name :product
-     * To get product details
-     * @author  Antony
-     * @access  public
-     * @param :
-     * @return : array
-     */
-
-    public function product(){
-        $data= $this->home_model->get_products();
-        return $data;
-    }
+  
 
     /*
      * function name :category_product
@@ -97,12 +56,19 @@ class Home extends Site_Controller{
 
       foreach ($data as $key => $value) {
         $is_added = is_added_cart($value->id);
-        if($is_added){ 
+        if($value->quantity<=0){
+            $added="Out Of Stock";
+            $disable="disabled";
+            $stock="out_of_stock";
+        }
+        elseif($is_added){ 
           $disable="disabled";
           $added="Added to cart";
+          $stock="";
         }else{
           $disable="";
-          $added="Add to cart";   
+          $added="Add to cart";
+          $stock="";   
         }
           $html .= '<div class="col-sm-3">'.
                                     '<div class="product-image-wrapper">'.
@@ -113,7 +79,7 @@ class Home extends Site_Controller{
                                                     '<h2>$'.$value->price.'</h2>'.
                                                 '<p>'.$value->name.'</p>'.
 
-                                                '<a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart"'.$disable.' data-id="'.$value->id.'" data-price="'.$value->price.'" data-name="'.$value->name.'" data-quantity="'.$value->quantity.'" data-image="'.$value->image_name.'" ><i class="fa fa-shopping-cart"></i>'.$added.'</a>'.
+                                                '<a href="javascript:void(0)" class="btn btn-default add-to-cart add_cart '.$disable.' '.$stock.'"'.$disable.' data-id="'.$value->id.'" data-price="'.$value->price.'" data-name="'.$value->name.'" data-quantity="'.$value->quantity.'" data-image="'.$value->image_name.'" ><i class="fa fa-shopping-cart"></i>'.$added.'</a>'.
                                                 '<a>'.
                                             '</div>' .
                                         '</div>'.
@@ -135,8 +101,8 @@ class Home extends Site_Controller{
      */
 
     public function sub_category($id){
-        $data['slide']=$this->banner();
-        $data['categories']=$this->category();
+        $data['slide']=$this->home_model->get_banner();
+        $data['categories']=$this->home_model->get_categories();
        
         $data['subproduct']= $this->home_model->sub_category($id);
         //show($data['subproduct']);

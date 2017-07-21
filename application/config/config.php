@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/ShopCart/';
+$config['base_url'] = 'http://10.0.11.83/ShopCart/';
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +521,4 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+$config['Mailchimp_api_key'] = '82e4eace5ba725417be81da202c7cea7-us16';
