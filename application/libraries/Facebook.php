@@ -21,7 +21,7 @@
 //require_once 'facebook/autoload.php'; 
 //require_once('/var/www/html/ShopCart/application/libraries/Facebook/autoload.php');
 
-use Facebook\Facebook as FB;
+//use Facebook\Facebook as FB;
 use Facebook\Authentication\AccessToken;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
