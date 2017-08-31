@@ -44,7 +44,7 @@
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="<?php echo base_url(); ?>site/facebook_auth"><i class="fa fa-facebook"></i></a></li>
+<!--                            <li><a href="--><?php //echo base_url(); ?><!--site/facebook_auth"><i class="fa fa-facebook"></i></a></li>-->
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                             <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
