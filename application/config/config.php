@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://limitless-reaches-98830.herokuapp.com/';
+$config['base_url'] = 'https://shopcartt.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------
