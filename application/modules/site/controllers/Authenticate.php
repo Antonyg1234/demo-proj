@@ -22,43 +22,43 @@ class Authenticate extends Site_Controller
      * @return : 
      */
 
-//    public function facebookLogin(){
-//        $userData = array();
-//
-//        if($this->facebook->is_authenticated()){
-//            $userProfile = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,gender,locale,picture');
-//
-//            $userData['fb_token'] = $userProfile['id'];
-//            $userData['firstname'] = $userProfile['first_name'];
-//            $userData['lastname'] = $userProfile['last_name'];
-//            $userData['email'] = $userProfile['email'];
-//
-//            $userID = $this->login_model->facebookLogin($userData);
-//
-//            // Check user data insert or update status
-//            if(!empty($userID)){
-//                    $userdata = array(
-//                        'site_user' => array(
-//                        'id' => $userID,
-//                        'firstname' => $userData['firstname'],
-//                        'lastname' => $userData['lastname'],
-//                        'email' => $userData['email'],
-//                     ));
-//
-//                   $this->session->set_userdata($userdata);
-//                   redirect('site/home');
-//            }else{
-//                redirect('login');
-//            }
-//
-//
-//
-//        }else{
-//            $this->session->set_flashdata('error', 'Could not verify credential. Sign up to login');
-//            redirect('login');
-//        }
-//
-//    }
+    public function facebookLogin(){
+        $userData = array();
+
+        if($this->facebook->is_authenticated()){
+            $userProfile = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,gender,locale,picture');
+
+            $userData['fb_token'] = $userProfile['id'];
+            $userData['firstname'] = $userProfile['first_name'];
+            $userData['lastname'] = $userProfile['last_name'];
+            $userData['email'] = $userProfile['email'];
+
+            $userID = $this->login_model->facebookLogin($userData);
+
+            // Check user data insert or update status
+            if(!empty($userID)){
+                    $userdata = array(
+                        'site_user' => array(
+                        'id' => $userID,
+                        'firstname' => $userData['firstname'],
+                        'lastname' => $userData['lastname'],
+                        'email' => $userData['email'],
+                     ));
+
+                   $this->session->set_userdata($userdata);
+                   redirect('site/home');
+            }else{
+                redirect('login');
+            }
+
+
+
+        }else{
+            $this->session->set_flashdata('error', 'Could not verify credential. Sign up to login');
+            redirect('login');
+        }
+
+    }
 
     /*
      * function name :googleLogin
