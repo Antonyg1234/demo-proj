@@ -73,11 +73,11 @@
                              </span>
                             </div>
                             
-                            <?php 
-                              $auth_url=$this->facebook->login_url();
-                            ?>
-                           
-                            <a href="<?php echo $auth_url; ?>"><img src="<?php echo base_url(); ?>public/assets/images/home/fb_login.png" alt="" class="img_width"/></a><br>
+<!--                            --><?php //
+//                              $auth_url=$this->facebook->login_url();
+//                            ?>
+<!--                           -->
+<!--                            <a href="--><?php //echo $auth_url; ?><!--"><img src="--><?php //echo base_url(); ?><!--public/assets/images/home/fb_login.png" alt="" class="img_width"/></a><br>-->
 
                            <?php 
                            include_once APPPATH."libraries/google-api-php-client/Google_Client.php";
