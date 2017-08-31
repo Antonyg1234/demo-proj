@@ -19,7 +19,7 @@
 
 // Include the autoloader provided in the SDK
 //require_once 'facebook/autoload.php';
-require_once('/var/www/html/ShopCart/application/libraries/Facebook/autoload.php');
+include_once('/var/www/html/ShopCart/application/libraries/Facebook/autoload.php');
 
 use Facebook\Facebook as FB;
 use Facebook\Authentication\AccessToken;
