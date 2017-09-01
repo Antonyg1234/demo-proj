@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f521d99-1962-4bd7-af1d-e0e9f8bf67c7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config/redis.php" afterPath="$PROJECT_DIR$/application/config/redis.php" />
     </list>
     <ignored path="ShopCart.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="redis.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="redis.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/config/redis.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+            <state relative-caret-position="162">
+              <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -54,7 +54,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="351">
@@ -179,9 +179,9 @@
         <option value="$PROJECT_DIR$/application/core/Site_Controller.php" />
         <option value="$PROJECT_DIR$/application/config/autoload.php" />
         <option value="$PROJECT_DIR$/application/modules/site/controllers/test_redis.php" />
-        <option value="$PROJECT_DIR$/application/config/redis.php" />
         <option value="$PROJECT_DIR$/application/modules/site/controllers/Test_redis.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/application/config/redis.php" />
       </list>
     </option>
   </component>
@@ -374,12 +374,12 @@
       <workItem from="1496207178121" duration="63000" />
       <workItem from="1496287786291" duration="3857000" />
       <workItem from="1497680912047" duration="22000" />
-      <workItem from="1504164265093" duration="18296000" />
+      <workItem from="1504164265093" duration="18359000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="512833000" />
+    <option name="totallyTimeSpent" value="512896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -763,14 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/redis.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/modules/site/controllers/Test_redis.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -799,6 +791,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
           <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/redis.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding />
         </state>
       </provider>
