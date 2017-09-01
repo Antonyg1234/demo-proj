@@ -1,19 +1,12 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/*
-| ————————————————————————-
-| Redis settings
-| ————————————————————————-
-| Your Redis servers can be specified below.
-|
-| See: http://codeigniter.com/user_guide/libraries/caching.html#redis
-|
-*/
+/**
+ * Config for the Redis library
+ *
+ * @see ../libraries/Redis.php
+ */
 
-
-$config['socket_type'] = 'tcp'; //`tcp` or `unix`
-$config['socket'] = '/var/run/redis.sock'; // in case of `unix` socket type
-$config['host'] = '127.0.0.1';
-$config['password'] = NULL;
-$config['port'] = 6379;
-$config['timeout'] = 0;
+// Connection details
+$config['redis_host'] = 'localhost';		// IP address or host
+$config['redis_port'] = '6379';				// Default Redis port is 6379
+$config['redis_password'] = '';				// Can be left empty when the server does not require AUTH
