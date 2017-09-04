@@ -37,7 +37,7 @@ function template($title){
       $content=$data['content'];
       $config['protocol'] = "smtp";
       $config['smtp_host'] = SMTP_HOST;
-      $config['smtp_port'] = "2525";
+      $config['smtp_port'] = "587";
       $config['smtp_user'] = SMTP_USER;
       $config['smtp_pass'] = SMTP_PASS;
       $config['charset'] = "utf-8";
