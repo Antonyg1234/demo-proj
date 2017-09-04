@@ -37,8 +37,8 @@ function template($title){
       $content=$data['content'];
       $config['protocol'] = "smtp";
       $config['smtp_host'] = SMTP_HOST;
-      $config['smtp_port'] = "25";
-      $config['smtp_user'] = SMTP_USER; 
+      $config['smtp_port'] = "2525";
+      $config['smtp_user'] = SMTP_USER;
       $config['smtp_pass'] = SMTP_PASS;
       $config['charset'] = "utf-8";
       $config['mailtype'] = "html";
@@ -51,4 +51,27 @@ function template($title){
       $this->email->message($content);
       $this->email->send();
     }
+
+//    public function email($data){
+//        //	var_dump($data);die();
+//        $to=$data['email'];
+//        $subject=$data['subject'];
+//        $html=$data['content'];
+////        $config['protocol'] = "smtp";
+////        $config['smtp_host'] = SMTP_HOST;
+////        $config['smtp_port'] = "25";
+////        $config['smtp_user'] = SMTP_USER;
+////        $config['smtp_pass'] = SMTP_PASS;
+////        $config['charset'] = "utf-8";
+////        $config['mailtype'] = "html";
+////        $config['newline'] = "\r\n";
+////        $this->email->initialize($config);
+//
+//        $from='antony.george@neosofttech.com';
+//        //$this->email->from(SMTP_USER, 'E-Shopper');
+//        //$this->email->to($email);
+//        //$this->email->subject($subject);
+//        //$this->email->message($content);
+//        $this->Sengrid_Mail->send($to, $subject, $text=NULL, $html=NULL, $from, $toname=NULL, $xsmtpapi=NULL, $bcc=NULL, $fromname=NULL, $replyto=NULL, $date=NULL, $files=NULL, $headers=array());
+//    }
 }

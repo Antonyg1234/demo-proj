@@ -85,9 +85,12 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 define('USER_UPLOAD_URL', "public/assets/images/uploads/banner/");
 define('USER_UPLOAD_PRODUCT_URL', "public/assets/images/uploads/product/");
-define('SMTP_HOST', 'smtp.wwindia.com');
-define('SMTP_USER', 'rashmi.nalwaya@wwindia.com');
-define('SMTP_PASS', 'RashmI123');
+//define('SMTP_HOST', 'smtp.wwindia.com');
+//define('SMTP_USER', 'rashmi.nalwaya@wwindia.com');
+//define('SMTP_PASS', 'RashmI123');
+define('SMTP_HOST', 'mail.smtp2go.com');
+define('SMTP_USER', 'antony.george@neosofttech.com');
+define('SMTP_PASS', 'UZWPg4F3TpiD');
 define('LIST_KEY', '8d376f9f05');
 define('ADMIN', 'antony.george@neosofttech.com');
 define('SIDENAV', 'application/modules/site/views/layouts/sidenav.php');
