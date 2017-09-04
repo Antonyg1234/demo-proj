@@ -203,7 +203,7 @@ class Login extends Site_Controller{
       //echo $email;die();
       $config['protocol'] = "smtp";
       $config['smtp_host'] = SMTP_HOST;
-      $config['smtp_port'] = "25";
+      $config['smtp_port'] = "587";
       $config['smtp_user'] = SMTP_USER; 
       $config['smtp_pass'] = SMTP_PASS;
       $config['charset'] = "utf-8";
