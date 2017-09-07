@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'sql12.freemysqlhosting.net',
-	'username' => 'sql12192471',
-	'password' => 'z9BtqLw4sj',
-	'database' => 'sql12192471',
+	'hostname' => 'localhost',
+	'username' => 'id2842655_shopcartt',
+	'password' => 'shopcartt',
+	'database' => 'id2842655_shopcartt',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
