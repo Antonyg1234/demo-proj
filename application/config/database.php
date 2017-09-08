@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => 'databases.000webhost.com',
 	'username' => 'id2842655_shopcartt',
 	'password' => 'shopcartt',
 	'database' => 'id2842655_shopcartt',
