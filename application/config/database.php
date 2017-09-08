@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'sql102.epizy.com',
-	'username' => 'epiz_20655463',
-	'password' => 'tkv6gpy4',
-	'database' => 'epiz_20655463_shopcartt',
+	'hostname' => 'sql12.freesqldatabase.com',
+	'username' => 'sql12193612',
+	'password' => '9pNZ1IMC9F',
+	'database' => 'sql12193612',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
