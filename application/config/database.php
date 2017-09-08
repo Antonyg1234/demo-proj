@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'sql102.epizy.com',
-	'username' => 'epiz_20655463',
-	'password' => 'tkv6gpy4',
-	'database' => 'epiz_20655463_shopcartt',
+	'hostname' => 'localhost',
+	'username' => 'id2842655_shopcartt',
+	'password' => 'shopcartt',
+	'database' => 'id2842655_shopcartt',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
