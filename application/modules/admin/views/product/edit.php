@@ -59,17 +59,16 @@
                       <label class="col-md-2 control-label">Product Category<span class="required">  *</span></label>
                       <div class="col-sm-6">
                         <select id="category_select" name="category_select[]" class="form-control select2" multiple="multiple" data-placeholder="Select a Category" style="width: 100%;">
-                        
-                        <?php foreach($data as $product)
-                        {   $selected = "";
-                            $selected = "selected";
-                            $product['catname'];
-                        ?>
-                        <option value="<?php echo $product['category_id'];?>" selected="<?php echo $selected; ?>"><?php echo $product['catname'];?></option>
-                        <?php } ?>
-                        <?php foreach ($dropdown->result() as $row){ ?>
-                        <option value="<?php echo $row->id;?>"><?php echo $row->name;?></option>
-                        <?php } ?>
+
+                            <?php foreach ($dropdown->result() as $row){ ?>
+                                <option value="<?php echo $row->id;?>"
+                                    <?php foreach($data as $product){
+                                        if($product['category_id']== $row->id){
+                                            echo 'selected';
+                                        }
+                                    } ?>><?php echo $row->name;?></option>
+                            <?php } ?>
+
                         </select>
                         <span class="required"> <?php echo form_error('category_select'); ?></span>
                      </div>
